@@ -4,25 +4,30 @@ import java.util.*;
 import java.util.logging.Level;
 
 public class Graph {
-    private Map<Node, Set<Node>> adjacencyList = new HashMap<>();
+    private List<List<Integer>> adjacencyList;
+    private boolean isDirected;
+    private boolean isTree;
 
-    // Adds an edge between the source node and the destination node
-    public void addEdge(Node source, Node destination) {
-        try {
-            this.adjacencyList.putIfAbsent(source, new HashSet<>());
-            this.adjacencyList.putIfAbsent(destination, new HashSet<>());
-            this.adjacencyList.get(source).add(destination);
-            // Uncomment the following line for undirected graphs
-            // this.adjacencyList.get(destination).add(source);
-        } catch (Exception e) {
-            MyLogger.log(Level.SEVERE, "Failed to add edge from " + source + " to " + destination + ": " + e.getMessage());
+    public Graph(int numberOfVertices, boolean isDirected, boolean isTree) {
+        this.adjacencyList = new ArrayList<>(numberOfVertices);
+        for (int i = 0; i < numberOfVertices; i++) {
+            this.adjacencyList.add(new ArrayList<>());
+        }
+        this.isDirected = isDirected;
+        this.isTree = isTree;
+    }
+
+    public void addEdge(int from, int to) {
+        this.adjacencyList.get(from).add(to);
+        if (!this.isDirected && !isTree) { // Pentru arbori, muchiile sunt adăugate doar într-o singură direcție
+            this.adjacencyList.get(to).add(from);
         }
     }
 
     // Returns the neighbors of a node
     public Set<Node> getNeighbors(Node node) {
         try {
-            Set<Node> neighbors = this.adjacencyList.get(node);
+            List<Integer> neighbors = this.adjacencyList.get(node.getId());
             if (neighbors == null) {
                 return Collections.emptySet();
             }
@@ -33,14 +38,4 @@ public class Graph {
         }
     }
 
-    // Prints the graph
-    public void printGraph() {
-        for (Node node : adjacencyList.keySet()) {
-            System.out.print("Node " + node.getId() + " connects to: ");
-            for (Node connectedNode : getNeighbors(node)) {
-                System.out.print(connectedNode.getId() + " ");
-            }
-            System.out.println();
-        }
-    }
 }
