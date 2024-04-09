@@ -1,0 +1,15 @@
+
+S
+java:S1153$"1Directly append the argument of String.valueOf().(ûÏ“êıÿÿÿÿ8²’¢ì1
+S
+java:S1153:"1Directly append the argument of String.valueOf().(ÖëÖÃùÿÿÿÿ8‡± ¢ì1
+L	java:S106$"+Replace this use of System.out by a logger.(ûÏ“êıÿÿÿÿ8ã·ãœì1
+L	java:S106("+Replace this use of System.out by a logger.(çÿÉ£şÿÿÿÿ8æ×ëœì1
+L	java:S106:"+Replace this use of System.out by a logger.(ÖëÖÃùÿÿÿÿ8è×ëœì1
+G	java:S106>"+Replace this use of System.out by a logger.(²Ş©‹8©šíœì1
+G	java:S106U"+Replace this use of System.out by a logger.(üÆ¨¢8ªšíœì1
+L	java:S106\"+Replace this use of System.out by a logger.(÷¾Æ¢øÿÿÿÿ8«šíœì1
+L	java:S106b"+Replace this use of System.out by a logger.(ñïä¼üÿÿÿÿ8ƒ€îœì1
+L	java:S106c"+Replace this use of System.out by a logger.(ö¬Äÿÿÿÿÿ8³ï†¢ì1
+L	java:S106d"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8€ó¢ì1
+G	java:S106h"+Replace this use of System.out by a logger.(ÔŠˆ8± ¢ì1

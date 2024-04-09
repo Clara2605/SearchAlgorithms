@@ -1,0 +1,33 @@
+@startuml
+
+class Graph {
+    -nodes: Set<Node>
+    +addEdge(Node, Node): void
+    +getNeighbors(Node): Set<Node>
+}
+
+class Node {
+    -id: int
+    +getId(): int
+}
+
+class GraphGenerator {
+    +generateGraph(int): Graph
+}
+
+class GraphReader {
+    +readGraph(String): List<List<Integer>>
+}
+
+class MyLogger {
+    -logger: Logger
+    +log(String): void
+}
+
+Graph --> Node : contains
+GraphGenerator ..> Graph : generates
+GraphReader ..> Graph : reads and converts to
+MyLogger ..> Graph : logs actions
+MyLogger ..> Node : logs actions
+
+@enduml

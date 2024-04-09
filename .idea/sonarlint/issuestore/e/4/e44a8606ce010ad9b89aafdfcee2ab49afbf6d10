@@ -1,0 +1,25 @@
+
+{	java:S115	"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(•§ƒËıÿÿÿÿ8ğö¡¢ì1
+{	java:S115
+"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(íÙ¡Éÿÿÿÿÿ8ğö¡¢ì1
+{	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÛÅ»ıÿÿÿÿ8³Òß¥ì1
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÆÍÒ®8Şñß¥ì1
+G	java:S106"+Replace this use of System.out by a logger.(‚”÷×8÷ö¡¢ì1
+G	java:S106"+Replace this use of System.out by a logger.(†èØ8øö¡¢ì1
+G	java:S106"+Replace this use of System.out by a logger.(ÿøˆø8øö¡¢ì1
+L	java:S106,"+Replace this use of System.out by a logger.(…Ûüñûÿÿÿÿ8ùö¡¢ì1
+L	java:S106-"+Replace this use of System.out by a logger.(°¤¯¸ÿÿÿÿÿ8ùö¡¢ì1
+F	java:S106."+Replace this use of System.out by a logger.(›ŠÕX8ùö¡¢ì1
+G	java:S106/"+Replace this use of System.out by a logger.(ù÷Ç÷8ùö¡¢ì1
+L	java:S1060"+Replace this use of System.out by a logger.(¨ÿæşÿÿÿÿ8ùö¡¢ì1
+L	java:S106@"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8ûö¡¢ì1
+L	java:S106C"+Replace this use of System.out by a logger.(ò†‚äıÿÿÿÿ8ûö¡¢ì1
+L	java:S106V"+Replace this use of System.out by a logger.(š±¡óúÿÿÿÿ8ıö¡¢ì1
+G	java:S106Z"+Replace this use of System.out by a logger.(Úğ‹Õ8›Í¢¢ì1
+G	java:S106\"+Replace this use of System.out by a logger.(ïâŠÎ8…ø¬¥ì1
+G
+java:S1068"*Remove this unused "LOGGER" private field.(âÑº8şö¡¢ì1
+W
+java:S1068"5Remove this unused "filePathTree10000" private field.(ÛÅ»ıÿÿÿÿ8Ú¤ë¥ì1
+Q
+java:S1068"4Remove this unused "filePathTree1000" private field.(ÆÍÒ®8Û¤ë¥ì1
