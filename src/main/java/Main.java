@@ -142,8 +142,8 @@ public class Main {
         // sau să execute ambele. Pentru exemplu, vom presupune că executăm ambele.
 
         try {
-            GraphAlgorithmExecutor.runTreeBFS(fileName, bfsTreeTimes, bfsTreeMemoryUsage);
-            GraphAlgorithmExecutor.runTreeDFS(fileName, dfsTreeTimes, dfsTreeMemoryUsage);
+            TreeAlgorithmExecutor.runTreeBFS(fileName, bfsTreeTimes, bfsTreeMemoryUsage);
+            TreeAlgorithmExecutor.runTreeDFS(fileName, dfsTreeTimes, dfsTreeMemoryUsage);
         } catch (IOException e) {
             e.printStackTrace();
         }

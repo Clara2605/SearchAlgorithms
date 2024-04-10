@@ -7,4 +7,4 @@ m
 java:S1149/"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(ŠÈÝà8ÈŽ’§ì1
 o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÎË¡®úÿÿÿÿ8©íŽ§ê1
 G	java:S106"+Replace this use of System.out by a logger.(žÁô¬8ØÐ˜ñë1
-L	java:S1064"+Replace this use of System.out by a logger.(¬‚»¹ùÿÿÿÿ8ÌŽ’§ì1
+L	java:S1064"+Replace this use of System.out by a logger.(ÄÔ„òþÿÿÿÿ8ÌŽ’§ì1

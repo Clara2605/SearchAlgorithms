@@ -45,7 +45,7 @@ public class BFSSequential {
 
         while (!queue.isEmpty()) {
             TreeNode currentNode = queue.poll();
-            System.out.println(currentNode.getValue()); // Utilizăm getter-ul pentru a accesa valoarea
+            System.out.print(currentNode.getValue() + " "); // Utilizăm getter-ul pentru a accesa valoarea
 
             for (TreeNode child : currentNode.getChildren()) { // Utilizăm getter-ul pentru a accesa copiii
                 queue.add(child);

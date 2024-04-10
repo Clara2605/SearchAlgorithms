@@ -41,3 +41,5 @@ S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 ]
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
+X
+(src/main/java/TreeAlgorithmExecutor.java,e\8\e8da77dd9abac905474293de6a2d1a65e7f13485

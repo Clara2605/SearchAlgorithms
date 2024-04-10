@@ -49,7 +49,7 @@ public class DFSSequential {
 
         while (!stack.isEmpty()) {
             TreeNode currentNode = stack.pop();
-            System.out.println(currentNode.getValue()); // Procesăm nodul curent
+            System.out.print(currentNode.getValue()+ " "); // Procesăm nodul curent
 
             // Adăugăm toți copiii nodului curent în stivă, invers pentru a menține ordinea corectă de vizitare
             for (int i = currentNode.getChildren().size() - 1; i >= 0; i--) {

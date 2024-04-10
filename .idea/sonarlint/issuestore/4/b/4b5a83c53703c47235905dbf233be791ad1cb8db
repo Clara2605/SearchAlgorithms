@@ -4,4 +4,4 @@ java:S1319"cThe type of "adj" should be an interface such as "List" rather tha
 r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É…ßùÿÿÿÿ8ŒÅ‘ûë1
 o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘À¦†üÿÿÿÿ8—Å‘ûë1
 G	java:S106"+Replace this use of System.out by a logger.(Áô¬8™Å‘ûë1
-F	java:S1060"+Replace this use of System.out by a logger.(±åÄA8¦Òú¦ì1
+L	java:S1060"+Replace this use of System.out by a logger.(æ¡Îºÿÿÿÿÿ8¦Òú¦ì1
