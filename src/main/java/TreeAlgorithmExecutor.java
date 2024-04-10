@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.logging.Logger;
 
 public class TreeAlgorithmExecutor {
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static void runTreeBFS(String fileName, List<Double> bfsTimes, List<Long> memoryUsage) throws IOException {
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
         MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
@@ -26,11 +26,11 @@ public class TreeAlgorithmExecutor {
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
         memoryUsage.add(afterUsedMem - beforeUsedMem);
-        System.out.printf("\nSequential graphBFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
+        System.out.printf("\nSequential treeBFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
 
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\ngraphBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
+        System.out.printf("\ntreeBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         bfsTimes.add(durationInSeconds);
     }
 
@@ -47,10 +47,10 @@ public class TreeAlgorithmExecutor {
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
         memoryUsage.add(afterUsedMem - beforeUsedMem);
-        System.out.printf("\nSequential graphDFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
+        System.out.printf("\nSequential treeDFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\ngraphDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
+        System.out.printf("\ntreeDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         dfsTimes.add(durationInSeconds);
     }
     public static TreeNode readTreeFromFile(String fileName) throws IOException {
@@ -72,5 +72,33 @@ public class TreeAlgorithmExecutor {
 
         // Presupunând că primul nod este rădăcina arborelui
         return nodes.get(0); // sau orice altă logică specifică pentru a determina rădăcina
+    }
+
+    public static void runTreeMethods(String fileName, Scanner scanner, int nodeCount) {
+        List<Double> bfsTreeTimes = new ArrayList<>();
+        List<Double> dfsTreeTimes = new ArrayList<>();
+        List<Long> bfsTreeMemoryUsage = new ArrayList<>();
+        List<Long> dfsTreeMemoryUsage = new ArrayList<>();
+
+        try {
+            runTreeBFS(fileName, bfsTreeTimes, bfsTreeMemoryUsage);
+            runTreeDFS(fileName, dfsTreeTimes, dfsTreeMemoryUsage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ExcelDataRecorder.writeData("SequentialExecutionTimes.xlsx", bfsTreeTimes, dfsTreeTimes, nodeCount, true, true);
+            ExcelDataRecorder.writeData("SequentialMemoryUsage.xlsx", convertToDoubleList(bfsTreeMemoryUsage), convertToDoubleList(dfsTreeMemoryUsage), nodeCount, false, true);
+        } catch (IOException e) {
+            LOGGER.severe("Failed to write tree execution times to Excel for " + nodeCount + " nodes.");
+        }
+    }
+    public static List<Double> convertToDoubleList(List<Long> longList) {
+        List<Double> doubleList = new ArrayList<>();
+        for (Long value : longList) {
+            doubleList.add(value.doubleValue());
+        }
+        return doubleList;
     }
 }

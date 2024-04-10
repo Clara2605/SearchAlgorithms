@@ -22,8 +22,11 @@ L	java:S106Q"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8ñ‹ÖÌì1
 L	java:S106T"+Replace this use of System.out by a logger.(ò†‚äıÿÿÿÿ8ò‹ÖÌì1
 L	java:S106e"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8ò‹ÖÌì1
 L	java:S106h"+Replace this use of System.out by a logger.(ò†‚äıÿÿÿÿ8ó‹ÖÌì1
-L	java:S106|"+Replace this use of System.out by a logger.(š±¡óúÿÿÿÿ8ô‹ÖÌì1
-H	java:S106€"+Replace this use of System.out by a logger.(Úğ‹Õ8õ‹ÖÌì1
-H	java:S106‚"+Replace this use of System.out by a logger.(ïâŠÎ8õ‹ÖÌì1
-L
-java:S1172‡".Remove this unused method parameter "scanner".(®ó—Ê8õ‹ÖÌì1
+R
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8ŸŠ£Îì1
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ŸŠ£Îì1
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ŸŠ£Îì1
+G
+java:S1068"*Remove this unused "LOGGER" private field.(âÑº8œ—™Îì1

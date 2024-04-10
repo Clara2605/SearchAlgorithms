@@ -61,6 +61,30 @@ public class GraphAlgorithmExecutor {
         dfsTimes.add(durationInSeconds);
     }
 
+    public static void runSequentialMethods(String fileName, int startNodeID, int nodeCount) {
+        List<Double> bfsSequentialTimes = new ArrayList<>();
+        List<Double> dfsSequentialTimes = new ArrayList<>();
+        List<Double> bfsMemoryUsage = new ArrayList<>();
+        List<Double> dfsMemoryUsage = new ArrayList<>();
+        try {
+            runSequentialBFS(fileName, startNodeID, bfsSequentialTimes, bfsMemoryUsage);
+            runSequentialDFS(fileName, startNodeID, dfsSequentialTimes, dfsMemoryUsage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            ExcelDataRecorder.writeData("SequentialExecutionTimes.xlsx", bfsSequentialTimes, dfsSequentialTimes, nodeCount, true,false);
+            System.out.println("Sequential execution times for " + nodeCount + " nodes saved to SequentialExecutionTimes.xlsx");
+
+            // Added: Write memory usage data to Excel
+            ExcelDataRecorder.writeData("SequentialMemoryUsage.xlsx", bfsMemoryUsage, dfsMemoryUsage, nodeCount, false,false);
+            System.out.println("Sequential memory usage for " + nodeCount + " nodes saved to SequentialMemoryUsage.xlsx");
+        } catch (IOException e) {
+            System.out.println("Failed to write sequential execution times to Excel for " + nodeCount + " nodes.");
+            e.printStackTrace();
+        }
+    }
+
     public static void runParallelMethods(String fileName, int startNodeID) throws Exception {
         ArrayList<ArrayList<Integer>> adj = GraphReader.readGraph(fileName);
         Graph graph = convertListToGraph(adj);

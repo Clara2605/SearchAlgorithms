@@ -72,7 +72,7 @@ public class Main {
             switch (choice) {
                 case 1: // Execute the sequential algorithms for tree
                     // Assuming that `runTreeMethods` is a method designed to run tree-specific algorithms
-                    runTreeMethods(fileName, scanner,nodeCount);
+                    TreeAlgorithmExecutor.runTreeMethods(fileName, scanner,nodeCount);
                     break;
                 case 2:
                     System.out.println("Parallel execution is not implemented for trees.");
@@ -88,7 +88,7 @@ public class Main {
         } else {
             switch (choice) {
                 case 1: // Execute the sequential algorithms for graph
-                    runSequentialMethods(fileName, startNodeID, nodeCount);
+                    GraphAlgorithmExecutor.runSequentialMethods(fileName, startNodeID, nodeCount);
                     break;
                 case 2: // Execute the parallel algorithms for graph
                     try {
@@ -106,57 +106,5 @@ public class Main {
                     break;
             }
         }
-    }
-
-    private static void runSequentialMethods(String fileName, int startNodeID, int nodeCount) {
-        List<Double> bfsSequentialTimes = new ArrayList<>();
-        List<Double> dfsSequentialTimes = new ArrayList<>();
-        List<Double> bfsMemoryUsage = new ArrayList<>();
-        List<Double> dfsMemoryUsage = new ArrayList<>();
-        try {
-            GraphAlgorithmExecutor.runSequentialBFS(fileName, startNodeID, bfsSequentialTimes, bfsMemoryUsage);
-            GraphAlgorithmExecutor.runSequentialDFS(fileName, startNodeID, dfsSequentialTimes, dfsMemoryUsage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            ExcelDataRecorder.writeData("SequentialExecutionTimes.xlsx", bfsSequentialTimes, dfsSequentialTimes, nodeCount, true,false);
-            System.out.println("Sequential execution times for " + nodeCount + " nodes saved to SequentialExecutionTimes.xlsx");
-
-            // Added: Write memory usage data to Excel
-            ExcelDataRecorder.writeData("SequentialMemoryUsage.xlsx", bfsMemoryUsage, dfsMemoryUsage, nodeCount, false,false);
-            System.out.println("Sequential memory usage for " + nodeCount + " nodes saved to SequentialMemoryUsage.xlsx");
-        } catch (IOException e) {
-            System.out.println("Failed to write sequential execution times to Excel for " + nodeCount + " nodes.");
-            e.printStackTrace();
-        }
-    }
-
-    private static void runTreeMethods(String fileName, Scanner scanner, int nodeCount) {
-        List<Double> bfsTreeTimes = new ArrayList<>();
-        List<Double> dfsTreeTimes = new ArrayList<>();
-        List<Long> bfsTreeMemoryUsage = new ArrayList<>();
-        List<Long> dfsTreeMemoryUsage = new ArrayList<>();
-
-        try {
-            TreeAlgorithmExecutor.runTreeBFS(fileName, bfsTreeTimes, bfsTreeMemoryUsage);
-            TreeAlgorithmExecutor.runTreeDFS(fileName, dfsTreeTimes, dfsTreeMemoryUsage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ExcelDataRecorder.writeData("SequentialExecutionTimes.xlsx", bfsTreeTimes, dfsTreeTimes, nodeCount, true, true);
-            ExcelDataRecorder.writeData("SequentialMemoryUsage.xlsx", convertToDoubleList(bfsTreeMemoryUsage), convertToDoubleList(dfsTreeMemoryUsage), nodeCount, false, true);
-        } catch (IOException e) {
-            LOGGER.severe("Failed to write tree execution times to Excel for " + nodeCount + " nodes.");
-        }
-    }
-    private static List<Double> convertToDoubleList(List<Long> longList) {
-        List<Double> doubleList = new ArrayList<>();
-        for (Long value : longList) {
-            doubleList.add(value.doubleValue());
-        }
-        return doubleList;
     }
 }
