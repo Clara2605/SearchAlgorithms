@@ -1,6 +1,7 @@
 package sequential;
 
 
+import tree.TreeNode;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -33,6 +34,21 @@ public class BFSSequential {
                     visited[v] = true;
                     queue.add(v);
                 }
+            }
+        }
+    }
+    public static void treeBFS(TreeNode root) {
+        if (root == null) return;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode currentNode = queue.poll();
+            System.out.println(currentNode.getValue()); // Utilizăm getter-ul pentru a accesa valoarea
+
+            for (TreeNode child : currentNode.getChildren()) { // Utilizăm getter-ul pentru a accesa copiii
+                queue.add(child);
             }
         }
     }

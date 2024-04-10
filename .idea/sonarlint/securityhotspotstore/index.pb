@@ -3,8 +3,6 @@
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 U
 %src/test/java/GraphGeneratorTest.java,e\1\e14cc4dbac55ff92c5efeb9cfbe5b3ce2ef77011
-9
-	graph.txt,1\6\165ce81c75afd35e4aaf0458e347527038f8a980
 G
 src/main/java/Main.java,e\4\e44a8606ce010ad9b89aafdfcee2ab49afbf6d10
 W
@@ -27,15 +25,19 @@ Q
 !src/main/java/graph/MyLogger.java,c\d\cde2d93713eda3df6807d1cde5af2ee8960a1f40
 ]
 -src/main/java/ExcelExecutionTimeRecorder.java,2\e\2ebd82aa21fdeb616d3b211b773356da022169c9
-J
-src/main/java/diagram.puml,8\d\8d57aa26984d8aec4eab01cfc1c9537112ade8bf
-O
-src/main/resources/diagram.puml,7\f\7faa787ed62fa795e825a32981fbc776eeab1618
 Y
 )src/main/java/GraphAlgorithmExecutor.java,2\6\2697a3c01a5c04fb2b53b8729801c212bbb3e27f
 W
 'src/main/resources/diagram/diagram.puml,6\e\6eabe2523d019ad034204e53ff23291b51238da7
-W
-'src/main/resources/data_input/graph.txt,2\0\204f539f2e0ae797089aa5570ff8fe649729860a
 \
 ,src/main/resources/data_input/graph10000.txt,9\e\9ef249ada08efb0b9dd3a8725c13005d83f6b8a7
+P
+ src/main/java/tree/TreeNode.java,8\9\89d953eaa4860dfb444b75c5d68172fb3087b88d
+U
+%src/main/java/tree/TreeGenerator.java,a\8\a8b329c95508bf6b9151a10e789c9376ee8e1e59
+Y
+)src/test/java/tree/TreeGeneratorTest.java,8\7\8761510bcf572e0b25f7e30a9cc8f6894d202ee5
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e

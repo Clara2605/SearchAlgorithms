@@ -1,7 +1,10 @@
 
 …
-java:S1319"cThe type of "adj" should be an interface such as "List" rather than the implementation "ArrayList".(ÎË¡®úÿÿÿÿ8í§ê1
+java:S1319"cThe type of "adj" should be an interface such as "List" rather than the implementation "ArrayList".(ÎË¡®úÿÿÿÿ8í§ê1
 r
-java:S1149"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(û›şöıÿÿÿÿ8¨í§ê1
-o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÎË¡®úÿÿÿÿ8©í§ê1
-G	java:S106"+Replace this use of System.out by a logger.(Áô¬8ØĞ˜ñë1
+java:S1149"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(û›şöıÿÿÿÿ8¨í§ê1
+m
+java:S1149/"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(ŠÈİà8È’§ì1
+o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÎË¡®úÿÿÿÿ8©í§ê1
+G	java:S106"+Replace this use of System.out by a logger.(Áô¬8ØĞ˜ñë1
+L	java:S1064"+Replace this use of System.out by a logger.(¬‚»¹ùÿÿÿÿ8Ì’§ì1
