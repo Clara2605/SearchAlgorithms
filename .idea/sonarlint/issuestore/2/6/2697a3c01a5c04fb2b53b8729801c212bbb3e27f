@@ -1,22 +1,15 @@
 
+N
+java:S1153""1Directly append the argument of String.valueOf().(‘“„Å8²’¢ì1
 S
-java:S1153%"1Directly append the argument of String.valueOf().(ûÏ“êıÿÿÿÿ8²’¢ì1
-S
-java:S1153;"1Directly append the argument of String.valueOf().(ÖëÖÃùÿÿÿÿ8‡± ¢ì1
-L	java:S106%"+Replace this use of System.out by a logger.(ûÏ“êıÿÿÿÿ8ã·ãœì1
-L	java:S106)"+Replace this use of System.out by a logger.(çÿÉ£şÿÿÿÿ8æ×ëœì1
-L	java:S106;"+Replace this use of System.out by a logger.(ÖëÖÃùÿÿÿÿ8è×ëœì1
-G	java:S106?"+Replace this use of System.out by a logger.(²Ş©‹8©šíœì1
-G	java:S106V"+Replace this use of System.out by a logger.(üÆ¨¢8ªšíœì1
-L	java:S106]"+Replace this use of System.out by a logger.(÷¾Æ¢øÿÿÿÿ8«šíœì1
-L	java:S106c"+Replace this use of System.out by a logger.(ñïä¼üÿÿÿÿ8ƒ€îœì1
-L	java:S106d"+Replace this use of System.out by a logger.(ö¬Äÿÿÿÿÿ8³ï†¢ì1
-L	java:S106e"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8€ó¢ì1
-G	java:S106i"+Replace this use of System.out by a logger.(ÔŠˆ8± ¢ì1
-G
-java:S1128"*Remove this unused import 'tree.TreeNode'.(‹¹„é8öøØËì1
-P
-java:S1128
-"3Remove this unused import 'java.io.BufferedReader'.(€é²Å8öøØËì1
-Q
-java:S1128"/Remove this unused import 'java.io.FileReader'.(Â¡¢äşÿÿÿÿ8öøØËì1
+java:S11538"1Directly append the argument of String.valueOf().(âÇêøÿÿÿÿ8‡± ¢ì1
+G	java:S106""+Replace this use of System.out by a logger.(‘“„Å8ã·ãœì1
+L	java:S106&"+Replace this use of System.out by a logger.(øûéÈøÿÿÿÿ8æ×ëœì1
+L	java:S1068"+Replace this use of System.out by a logger.(âÇêøÿÿÿÿ8è×ëœì1
+G	java:S106<"+Replace this use of System.out by a logger.(ş÷†ö8©šíœì1
+G	java:S106S"+Replace this use of System.out by a logger.(Œ«Ş¤8ªšíœì1
+F	java:S106Z"+Replace this use of System.out by a logger.(îØâl8«šíœì1
+L	java:S106`"+Replace this use of System.out by a logger.(ñïä¼üÿÿÿÿ8ƒ€îœì1
+L	java:S106a"+Replace this use of System.out by a logger.(ö¬Äÿÿÿÿÿ8³ï†¢ì1
+L	java:S106b"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8€ó¢ì1
+G	java:S106f"+Replace this use of System.out by a logger.(ÔŠˆ8± ¢ì1

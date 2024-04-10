@@ -138,7 +138,7 @@ public class Main {
         List<Long> bfsTreeMemoryUsage = new ArrayList<>();
         List<Long> dfsTreeMemoryUsage = new ArrayList<>();
 
-        // Aici ar trebui să adăugați logica pentru a permite utilizatorului să aleagă între BFS și DFS
+        // Aici ar trebui să adăugați logica pentru a permite utilizatorului să aleagă între graphBFS și graphDFS
         // sau să execute ambele. Pentru exemplu, vom presupune că executăm ambele.
 
         try {

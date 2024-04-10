@@ -72,10 +72,10 @@ public class ExcelExecutionTimeRecorder {
         if (sheet == null) { // If the sheet doesn't exist, create a new one
             sheet = workbook.createSheet("Execution Times");
             Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("BFS Execution Time 10000 (s)");
-            headerRow.createCell(1).setCellValue("DFS Execution Time 10000 (s)");
-            headerRow.createCell(2).setCellValue("BFS Execution Time 1000 (s)");
-            headerRow.createCell(3).setCellValue("DFS Execution Time 1000 (s)");
+            headerRow.createCell(0).setCellValue("graphBFS Execution Time 10000 (s)");
+            headerRow.createCell(1).setCellValue("graphDFS Execution Time 10000 (s)");
+            headerRow.createCell(2).setCellValue("graphBFS Execution Time 1000 (s)");
+            headerRow.createCell(3).setCellValue("graphDFS Execution Time 1000 (s)");
         }
         return sheet;
     }
@@ -130,10 +130,10 @@ public class ExcelExecutionTimeRecorder {
         if (sheet == null) { // If the sheet doesn't exist, create a new one
             sheet = workbook.createSheet("Memory Usage");
             Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("BFS Memory Usage 10000 (bytes)");
-            headerRow.createCell(1).setCellValue("DFS Memory Usage 10000 (bytes)");
-            headerRow.createCell(2).setCellValue("BFS Memory Usage 1000 (bytes)");
-            headerRow.createCell(3).setCellValue("DFS Memory Usage 1000 (bytes)");
+            headerRow.createCell(0).setCellValue("graphBFS Memory Usage 10000 (bytes)");
+            headerRow.createCell(1).setCellValue("graphDFS Memory Usage 10000 (bytes)");
+            headerRow.createCell(2).setCellValue("graphBFS Memory Usage 1000 (bytes)");
+            headerRow.createCell(3).setCellValue("graphDFS Memory Usage 1000 (bytes)");
         }
         return sheet;
     }

@@ -11,10 +11,10 @@ import java.util.logging.Logger;
 public class DFSSequential {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    // DFS function
-    public static void DFS(ArrayList<ArrayList<Integer>> adj, int s) {
+    // graphDFS function
+    public static void graphDFS(ArrayList<ArrayList<Integer>> adj, int s) {
         if (adj == null || adj.isEmpty() || s < 0 || s >= adj.size()) {
-            LOGGER.log(Level.SEVERE, "Invalid parameters for DFS");
+            LOGGER.log(Level.SEVERE, "Invalid parameters for graphDFS");
             return;
         }
         boolean[] visited = new boolean[adj.size()];

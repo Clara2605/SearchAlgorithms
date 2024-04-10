@@ -5,10 +5,7 @@ import parallel.BFSParallel;
 import parallel.DFSParallel;
 import sequential.BFSSequential;
 import sequential.DFSSequential;
-import tree.TreeNode;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
@@ -25,20 +22,20 @@ public class GraphAlgorithmExecutor {
         MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
         long beforeUsedMem = beforeMem.getUsed();
 
-        // BFS execution
+        // graphBFS execution
         ArrayList<ArrayList<Integer>> adjacencyList = GraphReader.readGraph(fileName);
         long startTime = System.nanoTime();
-        BFSSequential.BFS(adjacencyList, startNodeID); // Execute BFS
+        BFSSequential.graphBFS(adjacencyList, startNodeID); // Execute graphBFS
         long endTime = System.nanoTime();
 
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
         memoryUsage.add(afterUsedMem - beforeUsedMem);
-        System.out.printf("\nSequential BFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by BFS
+        System.out.printf("\nSequential graphBFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
         // Time calculation
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\nBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
+        System.out.printf("\ngraphBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         bfsTimes.add(durationInSeconds);
     }
 
@@ -47,20 +44,20 @@ public class GraphAlgorithmExecutor {
         MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
         long beforeUsedMem = beforeMem.getUsed();
 
-        // DFS execution
+        // graphDFS execution
         ArrayList<ArrayList<Integer>> adjacencyList = GraphReader.readGraph(fileName);
         long startTime = System.nanoTime();
-        DFSSequential.DFS(adjacencyList, startNodeID); // Execute DFS
+        DFSSequential.graphDFS(adjacencyList, startNodeID); // Execute graphDFS
         long endTime = System.nanoTime();
 
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
-        memoryUsage.add(afterUsedMem - beforeUsedMem); // Calculate memory used by DFS
-        System.out.printf("\nSequential DFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by BFS
+        memoryUsage.add(afterUsedMem - beforeUsedMem); // Calculate memory used by graphDFS
+        System.out.printf("\nSequential graphDFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
         // Time calculation
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\nDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
+        System.out.printf("\ngraphDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         dfsTimes.add(durationInSeconds);
     }
 
@@ -80,17 +77,17 @@ public class GraphAlgorithmExecutor {
         executor.shutdown();
         executor.awaitTermination(1, TimeUnit.HOURS);
 
-        // Extragere și afișare rezultate BFS
+        // Extragere și afișare rezultate graphBFS
         Set<Node> bfsResult = bfsResultFuture.get();
         long endBfsTime = System.nanoTime();
-        System.out.println("BFS Graph Structure:");
+        System.out.println("graphBFS Graph Structure:");
         bfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
         printExecutionTime(startBfsTime, endBfsTime);
 
-        // Extragere și afișare rezultate DFS
+        // Extragere și afișare rezultate graphDFS
         Set<Node> dfsResult = dfsResultFuture.get();
         long endDfsTime = System.nanoTime();
-        System.out.println("DFS Graph Structure:");
+        System.out.println("graphDFS Graph Structure:");
         dfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
         printExecutionTime(startDfsTime, endDfsTime);
     }

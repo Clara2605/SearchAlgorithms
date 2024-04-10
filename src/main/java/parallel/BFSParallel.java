@@ -78,7 +78,7 @@ public class BFSParallel implements Callable<Set<Node>> {
                 }
             }
         } catch (Exception e) {
-            MyLogger.log(Level.SEVERE, "An error occurred during BFS: " + e.getMessage());
+            MyLogger.log(Level.SEVERE, "An error occurred during graphBFS: " + e.getMessage());
             // Rethrow if you want the caller to handle it or handle/recover internally
         }
         return visited.keySet();

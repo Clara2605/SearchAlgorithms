@@ -32,7 +32,7 @@
 //        }
 //    }
 //
-//    // Method to start parallel DFS
+//    // Method to start parallel graphDFS
 //    public static void startParallelDFS(Graph graph, Node startNode) throws InterruptedException {
 //        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 //        executor.submit(new DFSParallel(graph, startNode));
@@ -79,7 +79,7 @@ public class DFSParallel implements Callable<Set<Node>> {
                 });
             }
         } catch (Exception e) {
-            MyLogger.log(Level.SEVERE, "An error occurred during DFS: " + e.getMessage());
+            MyLogger.log(Level.SEVERE, "An error occurred during graphDFS: " + e.getMessage());
             // Optionally rethrow or handle the exception
         }
         return visited.keySet();

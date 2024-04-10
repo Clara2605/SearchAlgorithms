@@ -11,10 +11,10 @@ import java.util.logging.Logger;
 public class BFSSequential {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    // BFS applied to the graph
-    public static void BFS(ArrayList<ArrayList<Integer>> adj, int s) {
+    // graphBFS applied to the graph
+    public static void graphBFS(ArrayList<ArrayList<Integer>> adj, int s) {
         if (adj == null || adj.isEmpty() || s < 0 || s >= adj.size()) {
-            LOGGER.log(Level.SEVERE, "Invalid parameters for BFS");
+            LOGGER.log(Level.SEVERE, "Invalid parameters for graphBFS");
             return;
         }
 

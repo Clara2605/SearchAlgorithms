@@ -20,17 +20,17 @@ public class TreeAlgorithmExecutor {
 
         TreeNode root = readTreeFromFile(fileName); // Ipoteză metoda de citire a arborelui
         long startTime = System.nanoTime();
-        BFSSequential.treeBFS(root); // Execută BFS pe arbore
+        BFSSequential.treeBFS(root); // Execută graphBFS pe arbore
         long endTime = System.nanoTime();
 
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
         memoryUsage.add(afterUsedMem - beforeUsedMem);
-        System.out.printf("\nSequential BFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by BFS
+        System.out.printf("\nSequential graphBFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
 
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\nBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
+        System.out.printf("\ngraphBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         bfsTimes.add(durationInSeconds);
     }
 
@@ -41,16 +41,16 @@ public class TreeAlgorithmExecutor {
 
         TreeNode root = readTreeFromFile(fileName); // Ipoteză metoda de citire a arborelui
         long startTime = System.nanoTime();
-        DFSSequential.treeDFS(root); // Execută DFS pe arbore
+        DFSSequential.treeDFS(root); // Execută graphDFS pe arbore
         long endTime = System.nanoTime();
 
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
         memoryUsage.add(afterUsedMem - beforeUsedMem);
-        System.out.printf("\nSequential DFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by BFS
+        System.out.printf("\nSequential graphDFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\nDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
+        System.out.printf("\ngraphDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         dfsTimes.add(durationInSeconds);
     }
     public static TreeNode readTreeFromFile(String fileName) throws IOException {
