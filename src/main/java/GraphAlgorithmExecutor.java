@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class GraphAlgorithmExecutor {
-    public static void runSequentialBFS(String fileName, int startNodeID, List<Double> bfsTimes, List<Long> memoryUsage) throws IOException {
+    public static void runSequentialBFS(String fileName, int startNodeID, List<Double> bfsTimes, List<Double> memoryUsage) throws IOException {
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
         MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
         long beforeUsedMem = beforeMem.getUsed();
@@ -30,7 +30,7 @@ public class GraphAlgorithmExecutor {
 
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
-        memoryUsage.add(afterUsedMem - beforeUsedMem);
+        memoryUsage.add((double) (afterUsedMem - beforeUsedMem));
         System.out.printf("\nSequential graphBFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
         // Time calculation
@@ -39,7 +39,7 @@ public class GraphAlgorithmExecutor {
         bfsTimes.add(durationInSeconds);
     }
 
-    public static void runSequentialDFS(String fileName, int startNodeID, List<Double> dfsTimes, List<Long> memoryUsage) throws IOException {
+    public static void runSequentialDFS(String fileName, int startNodeID, List<Double> dfsTimes, List<Double> memoryUsage) throws IOException {
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
         MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
         long beforeUsedMem = beforeMem.getUsed();
@@ -52,7 +52,7 @@ public class GraphAlgorithmExecutor {
 
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
-        memoryUsage.add(afterUsedMem - beforeUsedMem); // Calculate memory used by graphDFS
+        memoryUsage.add((double) (afterUsedMem - beforeUsedMem)); // Calculate memory used by graphDFS
         System.out.printf("\nSequential graphDFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
         // Time calculation

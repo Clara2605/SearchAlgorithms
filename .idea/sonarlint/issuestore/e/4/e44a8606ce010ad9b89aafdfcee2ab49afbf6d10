@@ -22,9 +22,9 @@ L	java:S106Q"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8ÊÒ«Êì1
 L	java:S106T"+Replace this use of System.out by a logger.(ò†‚äıÿÿÿÿ8ÊÒ«Êì1
 L	java:S106e"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8ÌÒ«Êì1
 L	java:S106h"+Replace this use of System.out by a logger.(ò†‚äıÿÿÿÿ8ÍÒ«Êì1
-L	java:S106|"+Replace this use of System.out by a logger.(š±¡óúÿÿÿÿ8ÒÒ«Êì1
-H	java:S106€"+Replace this use of System.out by a logger.(Úğ‹Õ8ÒÒ«Êì1
-H	java:S106‚"+Replace this use of System.out by a logger.(ïâŠÎ8ÓÒ«Êì1
+L	java:S106|"+Replace this use of System.out by a logger.(š±¡óúÿÿÿÿ8 Ô“Ìì1
+H	java:S106€"+Replace this use of System.out by a logger.(Úğ‹Õ8 Ô“Ìì1
+H	java:S106‚"+Replace this use of System.out by a logger.(ïâŠÎ8 Ô“Ìì1
 Q
 java:S1172‡".Remove this unused method parameter "scanner".(ØÛ£şÿÿÿÿ8†¶Â§ì1
 G
