@@ -72,7 +72,7 @@ public class Main {
             switch (choice) {
                 case 1: // Execute the sequential algorithms for tree
                     // Assuming that `runTreeMethods` is a method designed to run tree-specific algorithms
-                    runTreeMethods(fileName, scanner);
+                    runTreeMethods(fileName, scanner,nodeCount);
                     break;
                 case 2:
                     System.out.println("Parallel execution is not implemented for trees.");
@@ -120,11 +120,11 @@ public class Main {
             e.printStackTrace();
         }
         try {
-            ExcelDataRecorder.writeData("SequentialExecutionTimes.xlsx", bfsSequentialTimes, dfsSequentialTimes, nodeCount, true);
+            ExcelDataRecorder.writeData("SequentialExecutionTimes.xlsx", bfsSequentialTimes, dfsSequentialTimes, nodeCount, true,false);
             System.out.println("Sequential execution times for " + nodeCount + " nodes saved to SequentialExecutionTimes.xlsx");
 
             // Added: Write memory usage data to Excel
-            ExcelDataRecorder.writeData("SequentialMemoryUsage.xlsx", bfsMemoryUsage, dfsMemoryUsage, nodeCount, false);
+            ExcelDataRecorder.writeData("SequentialMemoryUsage.xlsx", bfsMemoryUsage, dfsMemoryUsage, nodeCount, false,false);
             System.out.println("Sequential memory usage for " + nodeCount + " nodes saved to SequentialMemoryUsage.xlsx");
         } catch (IOException e) {
             System.out.println("Failed to write sequential execution times to Excel for " + nodeCount + " nodes.");
@@ -132,14 +132,11 @@ public class Main {
         }
     }
 
-    private static void runTreeMethods(String fileName, Scanner scanner) {
+    private static void runTreeMethods(String fileName, Scanner scanner, int nodeCount) {
         List<Double> bfsTreeTimes = new ArrayList<>();
         List<Double> dfsTreeTimes = new ArrayList<>();
         List<Long> bfsTreeMemoryUsage = new ArrayList<>();
         List<Long> dfsTreeMemoryUsage = new ArrayList<>();
-
-        // Aici ar trebui să adăugați logica pentru a permite utilizatorului să aleagă între graphBFS și graphDFS
-        // sau să execute ambele. Pentru exemplu, vom presupune că executăm ambele.
 
         try {
             TreeAlgorithmExecutor.runTreeBFS(fileName, bfsTreeTimes, bfsTreeMemoryUsage);
@@ -148,7 +145,18 @@ public class Main {
             e.printStackTrace();
         }
 
-        // Afișați rezultatele sau salvați-le cum preferați.
+        try {
+            ExcelDataRecorder.writeData("SequentialExecutionTimes.xlsx", bfsTreeTimes, dfsTreeTimes, nodeCount, true, true);
+            ExcelDataRecorder.writeData("SequentialMemoryUsage.xlsx", convertToDoubleList(bfsTreeMemoryUsage), convertToDoubleList(dfsTreeMemoryUsage), nodeCount, false, true);
+        } catch (IOException e) {
+            LOGGER.severe("Failed to write tree execution times to Excel for " + nodeCount + " nodes.");
+        }
     }
-
+    private static List<Double> convertToDoubleList(List<Long> longList) {
+        List<Double> doubleList = new ArrayList<>();
+        for (Long value : longList) {
+            doubleList.add(value.doubleValue());
+        }
+        return doubleList;
+    }
 }
