@@ -1,0 +1,61 @@
+@startuml
+skinparam linetype ortho
+left to right direction
+
+class Graph {
+    -adjacencyList: Map<Node, Set<Node>>
+    +addEdge(Node, Node): void
+    +getNeighbors(Node): Set<Node>
+    +printGraph(): void
+}
+
+class Node {
+    -id: int
+    +Node(int): void
+    +getId(): int
+    +equals(Object): boolean
+    +hashCode(): int
+    +toString(): String
+}
+
+class GraphReader {
+    +readGraph(String): List<List<Integer>>
+}
+
+class BFSParallel {
+    -graph: Graph
+    -startNode: Node
+    -queue: ConcurrentLinkedQueue<Node>
+    -visited: ConcurrentHashMap<Node, Boolean>
+    +BFSParallel(Graph, Node): void
+    +call(): Set<Node>
+}
+
+class DFSParallel {
+    -graph: Graph
+    -startNode: Node
+    -stack: ConcurrentLinkedDeque<Node>
+    -visited: ConcurrentHashMap<Node, Boolean>
+    +DFSParallel(Graph, Node): void
+    +call(): Set<Node>
+}
+
+class GraphAlgorithmExecutor {
+    +runParallelMethods(String, int): void
+}
+
+class Main {
+    +main(String[]): void
+}
+
+Graph --> Node : contains
+GraphReader ..> Graph : reads and converts to
+BFSParallel --> Graph
+BFSParallel --> Node
+DFSParallel --> Graph
+DFSParallel --> Node
+BFSParallel ..> GraphAlgorithmExecutor : used by
+DFSParallel ..> GraphAlgorithmExecutor : used by
+Main ..> GraphAlgorithmExecutor : executes
+
+@enduml
