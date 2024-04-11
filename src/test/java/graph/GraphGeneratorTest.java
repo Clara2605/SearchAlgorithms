@@ -1,3 +1,5 @@
+package graph;
+
 import graph.GraphGenerator;
 import org.junit.jupiter.api.Test;
 

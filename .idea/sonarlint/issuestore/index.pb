@@ -45,3 +45,5 @@ X
 (src/main/java/TreeAlgorithmExecutor.java,e\8\e8da77dd9abac905474293de6a2d1a65e7f13485
 T
 $src/main/java/ExcelDataRecorder.java,b\1\b14c5a4dcad9e5561cc51aa6194800dcbcd7d8f9
+[
++src/test/java/graph/GraphGeneratorTest.java,c\a\ca20f65d803cb46fcc5af161b1be05c05b682a9f

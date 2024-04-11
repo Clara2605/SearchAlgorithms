@@ -92,9 +92,15 @@ public class GraphAlgorithmExecutor {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
 
+        // For memory measurement
+        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
+        // Start memory usage tracking for BFS
+        MemoryUsage beforeBFSMem = memoryBean.getHeapMemoryUsage();
         long startBfsTime = System.nanoTime();
         Future<Set<Node>> bfsResultFuture = runParallelBFS(executor, graph, startNode);
 
+        // Start memory usage tracking for DFS
+        MemoryUsage beforeDFSMem = memoryBean.getHeapMemoryUsage();
         long startDfsTime = System.nanoTime();
         Future<Set<Node>> dfsResultFuture = runParallelDFS(executor, graph, startNode);
 
@@ -104,6 +110,9 @@ public class GraphAlgorithmExecutor {
         // Extragere și afișare rezultate graphBFS
         Set<Node> bfsResult = bfsResultFuture.get();
         long endBfsTime = System.nanoTime();
+        MemoryUsage afterBFSMem = memoryBean.getHeapMemoryUsage();
+        long bfsMemoryUsed = afterBFSMem.getUsed() - beforeBFSMem.getUsed();
+        System.out.println("Parallel graphBFS memory usage (bytes): " + bfsMemoryUsed);
         System.out.println("graphBFS Graph Structure:");
         bfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
         printExecutionTime(startBfsTime, endBfsTime);
@@ -111,6 +120,10 @@ public class GraphAlgorithmExecutor {
         // Extragere și afișare rezultate graphDFS
         Set<Node> dfsResult = dfsResultFuture.get();
         long endDfsTime = System.nanoTime();
+        MemoryUsage afterDFSMem = memoryBean.getHeapMemoryUsage();
+        long dfsMemoryUsed = afterDFSMem.getUsed() - beforeDFSMem.getUsed();
+        System.out.println("Parallel graphDFS memory usage (bytes): " + dfsMemoryUsed);
+
         System.out.println("graphDFS Graph Structure:");
         dfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
         printExecutionTime(startDfsTime, endDfsTime);
