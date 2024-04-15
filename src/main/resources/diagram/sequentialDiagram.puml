@@ -1,0 +1,57 @@
+@startuml
+skinparam linetype ortho
+left to right direction
+
+class BFSSequential {
+    +graphBFS(ArrayList<ArrayList<Integer>>, int): void
+    +treeBFS(TreeNode): void
+}
+
+class DFSSequential {
+    +graphDFS(ArrayList<ArrayList<Integer>>, int): void
+    +treeDFS(TreeNode): void
+}
+
+class TreeNode {
+    -value: int
+    -children: ArrayList<TreeNode>
+    +TreeNode(int): void
+    +addChild(TreeNode): void
+    +getValue(): int
+    +getChildren(): ArrayList<TreeNode>
+}
+
+class GraphAlgorithmExecutor {
+    +runSequentialBFS(String, int, List<Double>, List<Double>): void
+    +runSequentialDFS(String, int, List<Double>, List<Double>): void
+    +runSequentialMethods(String, int, int): void
+}
+
+class TreeAlgorithmExecutor {
+    +runTreeBFS(String, List<Double>, List<Long>): void
+    +runTreeDFS(String, List<Double>, List<Long>): void
+    +runTreeMethods(String, Scanner, int): void
+    +readTreeFromFile(String): TreeNode
+}
+
+class ExcelDataRecorder {
+    +writeHeader(Sheet, boolean): void
+    +writeDataInColumns(List<Double>, List<Double>, int, Row): void
+    +getNextEmptyRow(Sheet, int): int
+}
+
+class Main {
+    +main(String[]): void
+}
+
+BFSSequential ..> TreeAlgorithmExecutor : used by
+DFSSequential ..> TreeAlgorithmExecutor : used by
+TreeNode ..> TreeAlgorithmExecutor : used by
+Main ..> GraphAlgorithmExecutor : executes
+Main ..> TreeAlgorithmExecutor : executes
+BFSSequential ..> GraphAlgorithmExecutor : used by
+DFSSequential ..> GraphAlgorithmExecutor : used by
+ExcelDataRecorder ..> GraphAlgorithmExecutor : logs data
+ExcelDataRecorder ..> TreeAlgorithmExecutor : logs data
+
+@enduml

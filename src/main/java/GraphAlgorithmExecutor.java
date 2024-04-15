@@ -10,57 +10,79 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class GraphAlgorithmExecutor {
-    public static void runSequentialBFS(String fileName, int startNodeID, List<Double> bfsTimes, List<Long> memoryUsage) throws IOException {
+    public static void runSequentialBFS(String fileName, int startNodeID, List<Double> bfsTimes, List<Double> memoryUsage) throws IOException {
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
         MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
         long beforeUsedMem = beforeMem.getUsed();
 
-        // BFS execution
+        // graphBFS execution
         ArrayList<ArrayList<Integer>> adjacencyList = GraphReader.readGraph(fileName);
         long startTime = System.nanoTime();
-        BFSSequential.BFS(adjacencyList, startNodeID); // Execute BFS
+        BFSSequential.graphBFS(adjacencyList, startNodeID); // Execute graphBFS
         long endTime = System.nanoTime();
 
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
-        memoryUsage.add(afterUsedMem - beforeUsedMem);
-        System.out.printf("\nSequential BFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by BFS
+        memoryUsage.add((double) (afterUsedMem - beforeUsedMem));
+        System.out.printf("\nSequential graphBFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
         // Time calculation
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\nBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
+        System.out.printf("\ngraphBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         bfsTimes.add(durationInSeconds);
     }
 
-    public static void runSequentialDFS(String fileName, int startNodeID, List<Double> dfsTimes, List<Long> memoryUsage) throws IOException {
+    public static void runSequentialDFS(String fileName, int startNodeID, List<Double> dfsTimes, List<Double> memoryUsage) throws IOException {
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
         MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
         long beforeUsedMem = beforeMem.getUsed();
 
-        // DFS execution
+        // graphDFS execution
         ArrayList<ArrayList<Integer>> adjacencyList = GraphReader.readGraph(fileName);
         long startTime = System.nanoTime();
-        DFSSequential.DFS(adjacencyList, startNodeID); // Execute DFS
+        DFSSequential.graphDFS(adjacencyList, startNodeID); // Execute graphDFS
         long endTime = System.nanoTime();
 
         MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
         long afterUsedMem = afterMem.getUsed();
-        memoryUsage.add(afterUsedMem - beforeUsedMem); // Calculate memory used by DFS
-        System.out.printf("\nSequential DFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by BFS
+        memoryUsage.add((double) (afterUsedMem - beforeUsedMem)); // Calculate memory used by graphDFS
+        System.out.printf("\nSequential graphDFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
 
         // Time calculation
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\nDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
+        System.out.printf("\ngraphDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         dfsTimes.add(durationInSeconds);
+    }
+
+    public static void runSequentialMethods(String fileName, int startNodeID, int nodeCount) {
+        List<Double> bfsSequentialTimes = new ArrayList<>();
+        List<Double> dfsSequentialTimes = new ArrayList<>();
+        List<Double> bfsMemoryUsage = new ArrayList<>();
+        List<Double> dfsMemoryUsage = new ArrayList<>();
+        try {
+            runSequentialBFS(fileName, startNodeID, bfsSequentialTimes, bfsMemoryUsage);
+            runSequentialDFS(fileName, startNodeID, dfsSequentialTimes, dfsMemoryUsage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            ExcelDataRecorder.writeData("SequentialExecutionTimes.xlsx", bfsSequentialTimes, dfsSequentialTimes, nodeCount, true,false);
+            System.out.println("Sequential execution times for " + nodeCount + " nodes saved to SequentialExecutionTimes.xlsx");
+
+            // Added: Write memory usage data to Excel
+            ExcelDataRecorder.writeData("SequentialMemoryUsage.xlsx", bfsMemoryUsage, dfsMemoryUsage, nodeCount, false,false);
+            System.out.println("Sequential memory usage for " + nodeCount + " nodes saved to SequentialMemoryUsage.xlsx");
+        } catch (IOException e) {
+            System.out.println("Failed to write sequential execution times to Excel for " + nodeCount + " nodes.");
+            e.printStackTrace();
+        }
     }
 
     public static void runParallelMethods(String fileName, int startNodeID) throws Exception {
@@ -70,26 +92,39 @@ public class GraphAlgorithmExecutor {
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
 
+        // For memory measurement
+        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
+        // Start memory usage tracking for BFS
+        MemoryUsage beforeBFSMem = memoryBean.getHeapMemoryUsage();
         long startBfsTime = System.nanoTime();
         Future<Set<Node>> bfsResultFuture = runParallelBFS(executor, graph, startNode);
 
+        // Start memory usage tracking for DFS
+        MemoryUsage beforeDFSMem = memoryBean.getHeapMemoryUsage();
         long startDfsTime = System.nanoTime();
         Future<Set<Node>> dfsResultFuture = runParallelDFS(executor, graph, startNode);
 
         executor.shutdown();
         executor.awaitTermination(1, TimeUnit.HOURS);
 
-        // Extragere și afișare rezultate BFS
+        // Extragere și afișare rezultate graphBFS
         Set<Node> bfsResult = bfsResultFuture.get();
         long endBfsTime = System.nanoTime();
-        System.out.println("BFS Graph Structure:");
+        MemoryUsage afterBFSMem = memoryBean.getHeapMemoryUsage();
+        long bfsMemoryUsed = afterBFSMem.getUsed() - beforeBFSMem.getUsed();
+        System.out.println("Parallel graphBFS memory usage (bytes): " + bfsMemoryUsed);
+        System.out.println("graphBFS Graph Structure:");
         bfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
         printExecutionTime(startBfsTime, endBfsTime);
 
-        // Extragere și afișare rezultate DFS
+        // Extragere și afișare rezultate graphDFS
         Set<Node> dfsResult = dfsResultFuture.get();
         long endDfsTime = System.nanoTime();
-        System.out.println("DFS Graph Structure:");
+        MemoryUsage afterDFSMem = memoryBean.getHeapMemoryUsage();
+        long dfsMemoryUsed = afterDFSMem.getUsed() - beforeDFSMem.getUsed();
+        System.out.println("Parallel graphDFS memory usage (bytes): " + dfsMemoryUsed);
+
+        System.out.println("graphDFS Graph Structure:");
         dfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
         printExecutionTime(startDfsTime, endDfsTime);
     }
@@ -122,4 +157,5 @@ public class GraphAlgorithmExecutor {
     private static Future<Set<Node>> runParallelDFS(ExecutorService executor, Graph graph, Node startNode) {
         return executor.submit(new DFSParallel(graph, startNode));
     }
+
 }
