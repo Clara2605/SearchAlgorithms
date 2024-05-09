@@ -23,23 +23,23 @@ public class Main {
             dataStructureChoice = displayDataStructureChoice(scanner);
 
             if (dataStructureChoice == 1 || dataStructureChoice == 2) { // Graf sau Arbore
-                System.out.println("\nChoose the number of nodes (1000 or 10000):");
-                while (!scanner.hasNextInt() || !((nodeCount = scanner.nextInt()) == 1000 || nodeCount == 10000)) {
-                    System.out.println("Invalid input. Please choose 1000 or 10000.");
+                System.out.println("\nChoose the number of nodes (1000, 10000, or 50000):");
+                while (!scanner.hasNextInt() || !((nodeCount = scanner.nextInt()) == 1000 || nodeCount == 10000 || nodeCount == 50000)) {
+                    System.out.println("Invalid input. Please choose 1000, 10000, or 50000.");
                     scanner.nextLine(); // Clear the incorrect input
                 }
 
                 String fileName;
-                if (dataStructureChoice == 1) { // Graf
-                    fileName = (nodeCount == 1000) ? filePathGraph1000 : filePathGraph10000;
+                if (dataStructureChoice == 1) { // Graph
+                    fileName = getNodeFilePath(nodeCount, true); // true for graph
                     displayChoices();
                     int choice = scanner.nextInt();
                     choiceRun(choice, fileName, startNodeID, nodeCount, scanner, false);
-                } else { // Arbore
-                    fileName = (nodeCount == 1000) ? filePathTree1000 : filePathTree10000;
+                } else { // Tree
+                    fileName = getNodeFilePath(nodeCount, false); // false for tree
                     displayChoices();
                     int choice = scanner.nextInt();
-                    choiceRun(choice, fileName, startNodeID, nodeCount, scanner, true); // Aici, al patrulea parametru indică faptul că lucrăm cu arbori
+                    choiceRun(choice, fileName, startNodeID, nodeCount, scanner, true); // Indicate we're working with trees
                 }
             } else if (dataStructureChoice == 3) {
                 System.out.println("Exiting the program.");
@@ -48,6 +48,32 @@ public class Main {
         } while (true);
 
         scanner.close();
+    }
+
+    private static String getNodeFilePath(int nodeCount, boolean isGraph) {
+        if (isGraph) {
+            switch (nodeCount) {
+                case 1000:
+                    return filePathGraph1000;
+                case 10000:
+                    return filePathGraph10000;
+                case 50000:
+                    return filePathGraph50000;
+                default:
+                    return ""; // Just in case, although this should never happen
+            }
+        } else {
+            switch (nodeCount) {
+                case 1000:
+                    return filePathTree1000;
+                case 10000:
+                    return filePathTree10000;
+                case 50000:
+                    return filePathTree50000;
+                default:
+                    return ""; // Just in case, although this should never happen
+            }
+        }
     }
 
     private static int displayDataStructureChoice(Scanner scanner) {

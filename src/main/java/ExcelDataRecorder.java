@@ -26,7 +26,7 @@ public class ExcelDataRecorder {
         }
 
         sheet = getSheet(workbook, isExecutionTime);
-        int columnOffset = (isTree ? (nodeCount == 10000 ? 4 : 6) : (nodeCount == 10000 ? 0 : 2));
+        int columnOffset = getColumnOffset(nodeCount, isTree);
         int rowNumberToWrite = getNextEmptyRow(sheet, columnOffset);
         Row row = sheet.getRow(rowNumberToWrite);
         if (row == null) {
@@ -53,24 +53,24 @@ public class ExcelDataRecorder {
 
     private static void initializeHeaderRow(Sheet sheet, boolean isExecutionTime) {
         Row headerRow = sheet.createRow(0);
-        if (isExecutionTime) {
-            headerRow.createCell(0).setCellValue("Graph BFS Execution Time 10000 (s)");
-            headerRow.createCell(1).setCellValue("Graph DFS Execution Time 10000 (s)");
-            headerRow.createCell(2).setCellValue("Graph BFS Execution Time 1000 (s)");
-            headerRow.createCell(3).setCellValue("Graph DFS Execution Time 1000 (s)");
-            headerRow.createCell(4).setCellValue("Tree BFS Execution Time 10000 (s)");
-            headerRow.createCell(5).setCellValue("Tree DFS Execution Time 10000 (s)");
-            headerRow.createCell(6).setCellValue("Tree BFS Execution Time 1000 (s)");
-            headerRow.createCell(7).setCellValue("Tree DFS Execution Time 1000 (s)");
+        String[] headers = new String[]{
+                "Graph BFS 10000", "Graph DFS 10000", "Graph BFS 1000", "Graph DFS 1000",
+                "Graph BFS 50000", "Graph DFS 50000", "Tree BFS 10000", "Tree DFS 10000",
+                "Tree BFS 1000", "Tree DFS 1000", "Tree BFS 50000", "Tree DFS 50000"
+        };
+        for (int i = 0; i < headers.length; i++) {
+            headerRow.createCell(i).setCellValue(headers[i] + (isExecutionTime ? " (s)" : " (bytes)"));
+        }
+    }
+
+    private static int getColumnOffset(int nodeCount, boolean isTree) {
+        int baseOffset = isTree ? 6 : 0; // Trees start after 6 columns for graphs
+        if (nodeCount == 1000) {
+            return baseOffset + 2;
+        } else if (nodeCount == 50000) {
+            return baseOffset + 4;
         } else {
-            headerRow.createCell(0).setCellValue("Graph BFS Memory Usage 10000 (bytes)");
-            headerRow.createCell(1).setCellValue("Graph DFS Memory Usage 10000 (bytes)");
-            headerRow.createCell(2).setCellValue("Graph BFS Memory Usage 1000 (bytes)");
-            headerRow.createCell(3).setCellValue("Graph DFS Memory Usage 1000 (bytes)");
-            headerRow.createCell(4).setCellValue("Tree BFS Memory Usage 10000 (bytes)");
-            headerRow.createCell(5).setCellValue("Tree DFS Memory Usage 10000 (bytes)");
-            headerRow.createCell(6).setCellValue("Tree BFS Memory Usage 1000 (bytes)");
-            headerRow.createCell(7).setCellValue("Tree DFS Memory Usage 1000 (bytes)");
+            return baseOffset;
         }
     }
 
@@ -88,12 +88,10 @@ public class ExcelDataRecorder {
 
     private static int getNextEmptyRow(Sheet sheet, int startColumnIndex) {
         int lastRowNum = sheet.getLastRowNum();
-        for (int colIndex = startColumnIndex; colIndex < startColumnIndex + 2; colIndex++) {
-            for (int rowNum = 1; rowNum <= lastRowNum; rowNum++) {
-                Row row = sheet.getRow(rowNum);
-                if (row == null || row.getCell(colIndex) == null || row.getCell(colIndex).toString().trim().isEmpty()) {
-                    return rowNum;
-                }
+        for (int rowNum = 1; rowNum <= lastRowNum; rowNum++) {
+            Row row = sheet.getRow(rowNum);
+            if (row == null || row.getCell(startColumnIndex) == null || row.getCell(startColumnIndex).toString().trim().isEmpty()) {
+                return rowNum;
             }
         }
         return lastRowNum + 1;
