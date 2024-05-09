@@ -6,8 +6,10 @@ import java.util.logging.Logger;
 
 public class Main {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final String filePathGraph50000 = "src/main/resources/data_input/graph50000.txt";
     private static final String filePathGraph10000 = "src/main/resources/data_input/graph10000.txt";
     private static final String filePathGraph1000 = "src/main/resources/data_input/graph1000.txt";
+    private static final String filePathTree50000 = "src/main/resources/data_input/tree50000.txt";
     private static final String filePathTree10000 = "src/main/resources/data_input/tree10000.txt";
     private static final String filePathTree1000 = "src/main/resources/data_input/tree1000.txt";
 

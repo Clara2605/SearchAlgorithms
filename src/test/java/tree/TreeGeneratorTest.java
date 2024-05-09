@@ -7,8 +7,8 @@ class TreeGeneratorTest {
 
     @Test
     void generateTreeTest() {
-        int numberOfVertices = 1000; // Numarul de noduri
-        String fileName = "tree.txt"; // Numele fișierului unde vom salva arborele
+        int numberOfVertices = 50000; // Numarul de noduri
+        String fileName = "tree50000.txt"; // Numele fișierului unde vom salva arborele
 
         TreeGenerator.generateTree(numberOfVertices, fileName);
         System.out.printf("Arborele a fost generat si salvat in %s%n", fileName);
