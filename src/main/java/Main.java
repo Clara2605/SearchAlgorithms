@@ -120,7 +120,7 @@ public class Main {
                     break;
                 case 2: // Execute the parallel algorithms for graph
                     try {
-                        GraphAlgorithmExecutor.runParallelMethods(fileName, startNodeID);
+                        GraphAlgorithmExecutor.runParallelMethods(fileName, startNodeID, nodeCount);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

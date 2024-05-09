@@ -85,12 +85,17 @@ public class GraphAlgorithmExecutor {
         }
     }
 
-    public static void runParallelMethods(String fileName, int startNodeID) throws Exception {
+    public static void runParallelMethods(String fileName, int startNodeID, int nodeCount) throws Exception {
         ArrayList<ArrayList<Integer>> adj = GraphReader.readGraph(fileName);
         Graph graph = convertListToGraph(adj);
         Node startNode = new Node(startNodeID);
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        List<Double> bfsParallelTimes = new ArrayList<>();
+        List<Double> dfsParallelTimes = new ArrayList<>();
+        List<Double> bfsMemoryUsage = new ArrayList<>();
+        List<Double> dfsMemoryUsage = new ArrayList<>();
 
         // For memory measurement
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
@@ -115,7 +120,10 @@ public class GraphAlgorithmExecutor {
         System.out.println("Parallel graphBFS memory usage (bytes): " + bfsMemoryUsed);
         System.out.println("graphBFS Graph Structure:");
         bfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
-        printExecutionTime(startBfsTime, endBfsTime);
+        double bfsDurationInSeconds = (endBfsTime - startBfsTime) / 1_000_000_000.0; // Convert nanoseconds to seconds
+        System.out.printf("Execution time: %.9f seconds.\n", bfsDurationInSeconds);
+        bfsMemoryUsage.add((double) bfsMemoryUsed);
+        bfsParallelTimes.add(bfsDurationInSeconds);
 
         // Extragere și afișare rezultate graphDFS
         Set<Node> dfsResult = dfsResultFuture.get();
@@ -126,7 +134,22 @@ public class GraphAlgorithmExecutor {
 
         System.out.println("graphDFS Graph Structure:");
         dfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
-        printExecutionTime(startDfsTime, endDfsTime);
+        double dfsDurationInSeconds = (endDfsTime - startDfsTime) / 1_000_000_000.0; // Convert nanoseconds to seconds
+        System.out.printf("Execution time: %.9f seconds.\n", dfsDurationInSeconds);
+        dfsMemoryUsage.add((double) dfsMemoryUsed);
+        dfsParallelTimes.add(dfsDurationInSeconds);
+
+        // Write results to Excel
+        try {
+            ExcelDataRecorder.writeData("ParallelExecutionTimes.xlsx", bfsParallelTimes, dfsParallelTimes, nodeCount, true, false);
+            System.out.println("Parallel execution times for " + nodeCount + " nodes saved to ParallelExecutionTimes.xlsx");
+
+            ExcelDataRecorder.writeData("ParallelMemoryUsage.xlsx", bfsMemoryUsage, dfsMemoryUsage, nodeCount, false, false);
+            System.out.println("Parallel memory usage for " + nodeCount + " nodes saved to ParallelMemoryUsage.xlsx");
+        } catch (IOException e) {
+            System.out.println("Failed to write parallel execution data to Excel.");
+            e.printStackTrace();
+        }
     }
 
     private static void printNodeAndNeighbors(Graph graph, Node node) {
@@ -134,10 +157,10 @@ public class GraphAlgorithmExecutor {
         graph.getNeighbors(node).forEach(neighbor -> System.out.print(neighbor.getId() + " "));
         System.out.println();
     }
-    private static void printExecutionTime(long startTime, long endTime) {
-        double durationInSeconds = (endTime - startTime) / 1_000_000_000.0; // Convert nanoseconds to seconds
-        System.out.printf("Execution time: %.9f seconds.\n", durationInSeconds);
-    }
+//    private static void printExecutionTime(long startTime, long endTime) {
+//        double durationInSeconds = (endTime - startTime) / 1_000_000_000.0; // Convert nanoseconds to seconds
+//        System.out.printf("Execution time: %.9f seconds.\n", durationInSeconds);
+//    }
     private static Graph convertListToGraph(ArrayList<ArrayList<Integer>> adjacencyList) {
         Graph graph = new Graph();
         for (int i = 0; i < adjacencyList.size(); i++) {
