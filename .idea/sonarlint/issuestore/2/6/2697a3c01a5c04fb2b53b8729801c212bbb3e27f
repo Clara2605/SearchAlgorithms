@@ -1,24 +1,32 @@
 
-N
-java:S1153""1Directly append the argument of String.valueOf().(‘“„Å8²’¢ì1
-S
-java:S11538"1Directly append the argument of String.valueOf().(âÇêøÿÿÿÿ8‡± ¢ì1
-G	java:S106""+Replace this use of System.out by a logger.(‘“„Å8ã·ãœì1
-L	java:S106&"+Replace this use of System.out by a logger.(øûéÈøÿÿÿÿ8æ×ëœì1
-L	java:S1068"+Replace this use of System.out by a logger.(âÇêøÿÿÿÿ8è×ëœì1
-G	java:S106<"+Replace this use of System.out by a logger.(ş÷†ö8©šíœì1
-L	java:S106M"+Replace this use of System.out by a logger.(š±¡óúÿÿÿÿ8ªšíœì1
-G	java:S106Q"+Replace this use of System.out by a logger.(Úğ‹Õ8«šíœì1
-G	java:S106S"+Replace this use of System.out by a logger.(ïâŠÎ8ƒ€îœì1
-L	java:S106x"+Replace this use of System.out by a logger.(Íä¾Ÿüÿÿÿÿ8³ï†¢ì1
-G	java:S106y"+Replace this use of System.out by a logger.(Œ«Ş¤8€ó¢ì1
-G	java:S106|"+Replace this use of System.out by a logger.(ÿ×ˆµ8± ¢ì1
-H	java:S106…"+Replace this use of System.out by a logger.(Ç¹À­8ƒ¶†Îì1
-G	java:S106‡"+Replace this use of System.out by a logger.(îØâl8íòªïì1
-H	java:S106Š"+Replace this use of System.out by a logger.(ğ–©·8âÒµïì1
-H	java:S106‘"+Replace this use of System.out by a logger.(İ‡µØ8 óäûõ1
-M	java:S106”"+Replace this use of System.out by a logger.(ˆè§‚şÿÿÿÿ8 óäûõ1
-M	java:S106–"+Replace this use of System.out by a logger.(ÚŠ°ùıÿÿÿÿ8Ë¥üõ1
-M	java:S106œ"+Replace this use of System.out by a logger.(ñïä¼üÿÿÿÿ8Ë¥üõ1
-M	java:S106"+Replace this use of System.out by a logger.(ö¬Äÿÿÿÿÿ8´ÏÌüõ1
-M	java:S106"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ßĞÒüõ1
+b
+java:S2184."ECast one of the operands of this subtraction operation to a "double".(¹áˆò8í‹…•ö1
+c
+java:S2184Ú"ECast one of the operands of this subtraction operation to a "double".(¹áˆò8˜Ã†•ö1
+W
+java:S1854+":Remove this useless assignment to local variable "endMem".(¤–Ïú8éÓÊö1
+q
+java:S12152"TDon't try to be smarter than the JVM, remove this call to run the garbage collector.(Ì°¬“8îÓÊö1
+q
+java:S12153"TDon't try to be smarter than the JVM, remove this call to run the garbage collector.(€êÜ8îÓÊö1
+L	java:S1067"+Replace this use of System.out by a logger.(ÌÚıÿÿÿÿ8îÓÊö1
+L	java:S106D"+Replace this use of System.out by a logger.(å‰™Íúÿÿÿÿ8ğÓÊö1
+L	java:S106E"+Replace this use of System.out by a logger.(ÖØõàûÿÿÿÿ8ñÓÊö1
+L	java:S106S"+Replace this use of System.out by a logger.(˜¿À¼úÿÿÿÿ8ñÓÊö1
+G	java:S106T"+Replace this use of System.out by a logger.(ş÷†ö8óÓÊö1
+L	java:S106d"+Replace this use of System.out by a logger.(š±¡óúÿÿÿÿ8óÓÊö1
+G	java:S106h"+Replace this use of System.out by a logger.(Úğ‹Õ8óÓÊö1
+G	java:S106j"+Replace this use of System.out by a logger.(ïâŠÎ8ùÓÊö1
+H	java:S106—"+Replace this use of System.out by a logger.(İ‡µØ8ùÓÊö1
+M	java:S106š"+Replace this use of System.out by a logger.(ˆè§‚şÿÿÿÿ8ùÓÊö1
+M	java:S106œ"+Replace this use of System.out by a logger.(ÚŠ°ùıÿÿÿÿ8¶ÏÌ”ö1
+H	java:S106¢"+Replace this use of System.out by a logger.(¥–‹ô8¶ÏÌ”ö1
+H	java:S106¤"+Replace this use of System.out by a logger.(Š¼¨Â8·ÏÌ”ö1
+M	java:S106¦"+Replace this use of System.out by a logger.(êúÄ¾ÿÿÿÿÿ8çİĞ”ö1
+M	java:S106ª"+Replace this use of System.out by a logger.(ñïä¼üÿÿÿÿ8çİĞ”ö1
+M	java:S106«"+Replace this use of System.out by a logger.(ö¬Äÿÿÿÿÿ8çİĞ”ö1
+M	java:S106¬"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8É£ˆ•ö1
+X
+java:S1854×":Remove this useless assignment to local variable "endMem".(¤–Ïú8§ˆÀ”ö1
+\
+java:S1854Ô"9Remove this useless assignment to local variable "nodes".(Ë•Ï™ÿÿÿÿÿ8§ˆÀ”ö1

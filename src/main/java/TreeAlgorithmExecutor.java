@@ -9,49 +9,78 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 public class TreeAlgorithmExecutor {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    public static void runTreeBFS(String fileName, List<Double> bfsTimes, List<Long> memoryUsage) throws IOException {
-        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-        MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
-        long beforeUsedMem = beforeMem.getUsed();
+    private static final MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
 
-        TreeNode root = readTreeFromFile(fileName); // Ipoteză metoda de citire a arborelui
+    private static long getMemoryUsage() {
+        return memoryBean.getHeapMemoryUsage().getUsed();
+    }
+
+    private static long monitorMemoryUsage(Runnable task) {
+        forceGarbageCollection();
+        long startMem = getMemoryUsage();
+        AtomicLong peakMem = new AtomicLong(startMem);
+        Thread memoryMonitor = new Thread(() -> {
+            while (!Thread.interrupted()) {
+                long currentMem = getMemoryUsage();
+                peakMem.set(Math.max(peakMem.get(), currentMem));
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+
+        memoryMonitor.start();
+        task.run();
+        memoryMonitor.interrupt();
+        forceGarbageCollection();
+
+        return peakMem.get() - startMem; // Return the peak memory usage in bytes
+    }
+
+    private static void forceGarbageCollection() {
+        try {
+            System.gc();
+            System.runFinalization();
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Thread interrupted during garbage collection.");
+        }
+    }
+
+    public static void runTreeBFS(String fileName, List<Double> bfsTimes, List<Long> memoryUsage) throws IOException {
+        TreeNode root = readTreeFromFile(fileName);
+        long memUsed = monitorMemoryUsage(() -> BFSSequential.treeBFS(root));
         long startTime = System.nanoTime();
-        BFSSequential.treeBFS(root); // Execută graphBFS pe arbore
+        BFSSequential.treeBFS(root);
         long endTime = System.nanoTime();
 
-        MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
-        long afterUsedMem = afterMem.getUsed();
-        memoryUsage.add(afterUsedMem - beforeUsedMem);
-        System.out.printf("\nSequential treeBFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
-
-
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\ntreeBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         bfsTimes.add(durationInSeconds);
+        memoryUsage.add(memUsed);
+        System.out.printf("\nTree BFS memory usage (bytes): %d\n", memUsed);
+        System.out.printf("Tree BFS execution time: %.9f seconds.\n", durationInSeconds);
     }
 
     public static void runTreeDFS(String fileName, List<Double> dfsTimes, List<Long> memoryUsage) throws IOException {
-        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-        MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
-        long beforeUsedMem = beforeMem.getUsed();
-
-        TreeNode root = readTreeFromFile(fileName); // Ipoteză metoda de citire a arborelui
+        TreeNode root = readTreeFromFile(fileName);
+        long memUsed = monitorMemoryUsage(() -> DFSSequential.treeDFS(root));
         long startTime = System.nanoTime();
-        DFSSequential.treeDFS(root); // Execută graphDFS pe arbore
+        DFSSequential.treeDFS(root);
         long endTime = System.nanoTime();
 
-        MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
-        long afterUsedMem = afterMem.getUsed();
-        memoryUsage.add(afterUsedMem - beforeUsedMem);
-        System.out.printf("\nSequential treeDFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
-
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\ntreeDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         dfsTimes.add(durationInSeconds);
+        memoryUsage.add(memUsed);
+        System.out.printf("\nTree DFS memory usage (bytes): %d\n", memUsed);
+        System.out.printf("Tree DFS execution time: %.9f seconds.\n", durationInSeconds);
     }
     public static TreeNode readTreeFromFile(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));

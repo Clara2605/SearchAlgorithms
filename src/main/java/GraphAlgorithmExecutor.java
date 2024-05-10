@@ -11,54 +11,77 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class GraphAlgorithmExecutor {
-    public static void runSequentialBFS(String fileName, int startNodeID, List<Double> bfsTimes, List<Double> memoryUsage) throws IOException {
-        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-        MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
-        long beforeUsedMem = beforeMem.getUsed();
+    private static final MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
 
-        // graphBFS execution
+    private static long getMemoryUsage() {
+        return memoryBean.getHeapMemoryUsage().getUsed();
+    }
+    private static double monitorMemoryUsage(Runnable task) {
+        forceGarbageCollection(); // Ensure a clean state before measurement
+        long startMem = getMemoryUsage();
+        AtomicLong peakMem = new AtomicLong(startMem);
+        Thread memoryMonitor = new Thread(() -> {
+            while (!Thread.interrupted()) {
+                long currentMem = getMemoryUsage();
+                peakMem.set(Math.max(peakMem.get(), currentMem));
+                try {
+                    Thread.sleep(10); // Sleep for a short time to prevent high CPU usage
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+
+        memoryMonitor.start(); // Start monitoring
+        task.run();
+        memoryMonitor.interrupt(); // End monitoring
+        forceGarbageCollection();
+        long endMem = getMemoryUsage();
+
+        //return (peakMem.get() - startMem) / (1024.0 * 1024.0); // Return the peak memory usage in megabytes
+        return peakMem.get() - startMem; // Return the peak memory usage in bytes
+    }
+    private static void forceGarbageCollection() {
+        try {
+            System.gc();
+            System.runFinalization();
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Thread interrupted during garbage collection.");
+        }
+    }
+    public static void runSequentialBFS(String fileName, int startNodeID, List<Double> bfsTimes, List<Double> memoryUsage) throws IOException {
         ArrayList<ArrayList<Integer>> adjacencyList = GraphReader.readGraph(fileName);
+        double memUsed = monitorMemoryUsage(() -> BFSSequential.graphBFS(adjacencyList, startNodeID));
         long startTime = System.nanoTime();
         BFSSequential.graphBFS(adjacencyList, startNodeID); // Execute graphBFS
         long endTime = System.nanoTime();
-
-        MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
-        long afterUsedMem = afterMem.getUsed();
-        memoryUsage.add((double) (afterUsedMem - beforeUsedMem));
-        System.out.printf("\nSequential graphBFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
-
-        // Time calculation
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\ngraphBFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         bfsTimes.add(durationInSeconds);
+        memoryUsage.add(memUsed);
+       // System.out.printf("\nSequential BFS memory usage (MB): %.2f\n", memUsed);
+        System.out.printf("\nSequential BFS memory usage (bytes): %.0f\n", memUsed);
+        System.out.printf("Sequential BFS execution time: %.9f seconds.\n", durationInSeconds);
+
     }
 
     public static void runSequentialDFS(String fileName, int startNodeID, List<Double> dfsTimes, List<Double> memoryUsage) throws IOException {
-        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-        MemoryUsage beforeMem = memoryBean.getHeapMemoryUsage();
-        long beforeUsedMem = beforeMem.getUsed();
-
-        // graphDFS execution
         ArrayList<ArrayList<Integer>> adjacencyList = GraphReader.readGraph(fileName);
+        double memUsed = monitorMemoryUsage(() -> DFSSequential.graphDFS(adjacencyList, startNodeID));
         long startTime = System.nanoTime();
         DFSSequential.graphDFS(adjacencyList, startNodeID); // Execute graphDFS
         long endTime = System.nanoTime();
-
-        MemoryUsage afterMem = memoryBean.getHeapMemoryUsage();
-        long afterUsedMem = afterMem.getUsed();
-        memoryUsage.add((double) (afterUsedMem - beforeUsedMem)); // Calculate memory used by graphDFS
-        System.out.printf("\nSequential graphDFS memory usage (bytes): " + String.valueOf(afterUsedMem - beforeUsedMem));// Calculate memory used by graphBFS
-
-        // Time calculation
         double durationInSeconds = (endTime - startTime) / 1_000_000_000.0;
-        System.out.printf("\ngraphDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
         dfsTimes.add(durationInSeconds);
+        memoryUsage.add(memUsed);
+       // System.out.printf("\nSequential DFS memory usage (MB): %.2f\n", memUsed);
+        System.out.printf("\nSequential DFS memory usage (bytes): %.0f\n", memUsed);
+        System.out.printf("\ngraphDFS execution time (iterative): %.9f seconds.\n", durationInSeconds);
     }
 
     public static void runSequentialMethods(String fileName, int startNodeID, int nodeCount) {
@@ -97,47 +120,30 @@ public class GraphAlgorithmExecutor {
         List<Double> bfsMemoryUsage = new ArrayList<>();
         List<Double> dfsMemoryUsage = new ArrayList<>();
 
-        // For memory measurement
-        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-        // Start memory usage tracking for BFS
-        MemoryUsage beforeBFSMem = memoryBean.getHeapMemoryUsage();
+        // Memory and execution time monitoring for BFS
+        double bfsMemUsage = monitorParallelMemoryUsage(() -> new BFSParallel(graph, startNode).call(), executor);
         long startBfsTime = System.nanoTime();
-        Future<Set<Node>> bfsResultFuture = runParallelBFS(executor, graph, startNode);
+        Set<Node> bfsResult = runParallelBFS(executor, graph, startNode).get();
+        long endBfsTime = System.nanoTime();
+        double bfsDurationInSeconds = (endBfsTime - startBfsTime) / 1_000_000_000.0; // Convert nanoseconds to seconds
+        bfsMemoryUsage.add(bfsMemUsage);
+        bfsParallelTimes.add(bfsDurationInSeconds);
 
-        // Start memory usage tracking for DFS
-        MemoryUsage beforeDFSMem = memoryBean.getHeapMemoryUsage();
+        // Memory and execution time monitoring for DFS
+        double dfsMemUsage = monitorParallelMemoryUsage(() -> new DFSParallel(graph, startNode).call(), executor);
         long startDfsTime = System.nanoTime();
-        Future<Set<Node>> dfsResultFuture = runParallelDFS(executor, graph, startNode);
+        Set<Node> dfsResult = runParallelDFS(executor, graph, startNode).get();
+        long endDfsTime = System.nanoTime();
+        double dfsDurationInSeconds = (endDfsTime - startDfsTime) / 1_000_000_000.0; // Convert nanoseconds to seconds
+        dfsMemoryUsage.add(dfsMemUsage);
+        dfsParallelTimes.add(dfsDurationInSeconds);
+
+        // Output results and cleanup
+        printResults("BFS", bfsResult, bfsDurationInSeconds, bfsMemUsage, graph);
+        printResults("DFS", dfsResult, dfsDurationInSeconds, dfsMemUsage, graph);
 
         executor.shutdown();
         executor.awaitTermination(1, TimeUnit.HOURS);
-
-        // Extragere și afișare rezultate graphBFS
-        Set<Node> bfsResult = bfsResultFuture.get();
-        long endBfsTime = System.nanoTime();
-        MemoryUsage afterBFSMem = memoryBean.getHeapMemoryUsage();
-        long bfsMemoryUsed = afterBFSMem.getUsed() - beforeBFSMem.getUsed();
-        System.out.println("Parallel graphBFS memory usage (bytes): " + bfsMemoryUsed);
-        System.out.println("graphBFS Graph Structure:");
-        bfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
-        double bfsDurationInSeconds = (endBfsTime - startBfsTime) / 1_000_000_000.0; // Convert nanoseconds to seconds
-        System.out.printf("Execution time: %.9f seconds.\n", bfsDurationInSeconds);
-        bfsMemoryUsage.add((double) bfsMemoryUsed);
-        bfsParallelTimes.add(bfsDurationInSeconds);
-
-        // Extragere și afișare rezultate graphDFS
-        Set<Node> dfsResult = dfsResultFuture.get();
-        long endDfsTime = System.nanoTime();
-        MemoryUsage afterDFSMem = memoryBean.getHeapMemoryUsage();
-        long dfsMemoryUsed = afterDFSMem.getUsed() - beforeDFSMem.getUsed();
-        System.out.println("Parallel graphDFS memory usage (bytes): " + dfsMemoryUsed);
-
-        System.out.println("graphDFS Graph Structure:");
-        dfsResult.forEach(node -> printNodeAndNeighbors(graph, node));
-        double dfsDurationInSeconds = (endDfsTime - startDfsTime) / 1_000_000_000.0; // Convert nanoseconds to seconds
-        System.out.printf("Execution time: %.9f seconds.\n", dfsDurationInSeconds);
-        dfsMemoryUsage.add((double) dfsMemoryUsed);
-        dfsParallelTimes.add(dfsDurationInSeconds);
 
         // Write results to Excel
         try {
@@ -152,15 +158,20 @@ public class GraphAlgorithmExecutor {
         }
     }
 
+    private static void printResults(String algorithmName, Set<Node> result, double durationInSeconds, double memoryUsage, Graph graph) {
+        System.out.println(algorithmName + " Graph Structure:");
+        result.forEach(node -> printNodeAndNeighbors(graph, node));
+        System.out.printf(algorithmName + " Execution time: %.9f seconds.\n", durationInSeconds);
+        //System.out.printf(algorithmName + " Memory usage (MB): %.2f\n", memoryUsage);
+        System.out.printf(algorithmName + " Memory usage (bytes): %.0f\n", memoryUsage);
+    }
+
     private static void printNodeAndNeighbors(Graph graph, Node node) {
         System.out.print("Node " + node.getId() + " connects to: ");
         graph.getNeighbors(node).forEach(neighbor -> System.out.print(neighbor.getId() + " "));
         System.out.println();
     }
-//    private static void printExecutionTime(long startTime, long endTime) {
-//        double durationInSeconds = (endTime - startTime) / 1_000_000_000.0; // Convert nanoseconds to seconds
-//        System.out.printf("Execution time: %.9f seconds.\n", durationInSeconds);
-//    }
+
     private static Graph convertListToGraph(ArrayList<ArrayList<Integer>> adjacencyList) {
         Graph graph = new Graph();
         for (int i = 0; i < adjacencyList.size(); i++) {
@@ -180,5 +191,30 @@ public class GraphAlgorithmExecutor {
     private static Future<Set<Node>> runParallelDFS(ExecutorService executor, Graph graph, Node startNode) {
         return executor.submit(new DFSParallel(graph, startNode));
     }
+    private static double monitorParallelMemoryUsage(Callable<Set<Node>> task, ExecutorService executor) throws Exception {
+        forceGarbageCollection();  // Ensure a clean state before measurement
+        long startMem = getMemoryUsage();
+        AtomicLong peakMem = new AtomicLong(startMem);
+        Thread memoryMonitor = new Thread(() -> {
+            while (!Thread.interrupted()) {
+                long currentMem = getMemoryUsage();
+                peakMem.set(Math.max(peakMem.get(), currentMem));
+                try {
+                    Thread.sleep(10);  // Sleep for a short time to prevent high CPU usage
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
 
+        memoryMonitor.start();  // Start monitoring
+        Future<Set<Node>> result = executor.submit(task);
+        Set<Node> nodes = result.get();  // Ensure task is completed
+        memoryMonitor.interrupt();  // End monitoring
+        forceGarbageCollection();
+        long endMem = getMemoryUsage();
+
+        //return (peakMem.get() - startMem) / (1024.0 * 1024.0);  // Return the peak memory usage in megabytes
+        return peakMem.get() - startMem;  // Return the peak memory usage in bytes
+    }
 }
