@@ -57,7 +57,9 @@ public class GraphAlgorithmExecutor {
     }
     public static void runSequentialBFS(String fileName, int startNodeID, List<Double> bfsTimes, List<Double> memoryUsage) throws IOException {
         ArrayList<ArrayList<Integer>> adjacencyList = GraphReader.readGraph(fileName);
+        BFSSequential.printOutput = false;
         double memUsed = monitorMemoryUsage(() -> BFSSequential.graphBFS(adjacencyList, startNodeID));
+        BFSSequential.printOutput = true;
         long startTime = System.nanoTime();
         BFSSequential.graphBFS(adjacencyList, startNodeID); // Execute graphBFS
         long endTime = System.nanoTime();
@@ -72,7 +74,9 @@ public class GraphAlgorithmExecutor {
 
     public static void runSequentialDFS(String fileName, int startNodeID, List<Double> dfsTimes, List<Double> memoryUsage) throws IOException {
         ArrayList<ArrayList<Integer>> adjacencyList = GraphReader.readGraph(fileName);
+        DFSSequential.printOutput = false;
         double memUsed = monitorMemoryUsage(() -> DFSSequential.graphDFS(adjacencyList, startNodeID));
+        DFSSequential.printOutput = true;
         long startTime = System.nanoTime();
         DFSSequential.graphDFS(adjacencyList, startNodeID); // Execute graphDFS
         long endTime = System.nanoTime();

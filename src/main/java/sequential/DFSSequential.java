@@ -4,12 +4,14 @@ package sequential;
 import tree.TreeNode;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DFSSequential {
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    public static boolean printOutput = true;
 
     // graphDFS function
     public static void graphDFS(ArrayList<ArrayList<Integer>> adj, int s) {
@@ -19,16 +21,17 @@ public class DFSSequential {
         }
         boolean[] visited = new boolean[adj.size()];
         Stack<Integer> stack = new Stack<>();
-
         stack.push(s);
 
         while (!stack.isEmpty()) {
             int u = stack.pop();
             if (!visited[u]) {
                 visited[u] = true;
-                System.out.print(u + " ");
-
-                // For each neighbor of u
+                if (printOutput) {
+                    System.out.print("Node " + u + " connects to: ");
+                    adj.get(u).forEach(v -> System.out.print(v + " "));
+                    System.out.println();
+                }
                 for (int v : adj.get(u)) {
                     if (!visited[v]) {
                         stack.push(v);
@@ -37,7 +40,6 @@ public class DFSSequential {
             }
         }
     }
-
     public static void treeDFS(TreeNode root) {
         if (root == null) {
             LOGGER.log(Level.SEVERE, "Root is null");
@@ -49,12 +51,20 @@ public class DFSSequential {
 
         while (!stack.isEmpty()) {
             TreeNode currentNode = stack.pop();
-            System.out.print(currentNode.getValue()+ " "); // Procesăm nodul curent
-
-            // Adăugăm toți copiii nodului curent în stivă, invers pentru a menține ordinea corectă de vizitare
-            for (int i = currentNode.getChildren().size() - 1; i >= 0; i--) {
-                stack.push(currentNode.getChildren().get(i));
+            if (printOutput) {
+                System.out.print("Node " + currentNode.getValue() + " connects to: ");
+                List<TreeNode> children = currentNode.getChildren();
+                if (children.isEmpty()) {
+                    System.out.print("no direct children\n");
+                } else {
+                    children.forEach(child -> System.out.print(child.getValue() + " "));
+                    System.out.println();
+                }
+                children.forEach(stack::push);
             }
+//            for (TreeNode child : currentNode.getChildren()) {
+//                stack.push(child);
+//            }
         }
     }
 }

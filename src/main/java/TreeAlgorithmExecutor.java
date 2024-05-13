@@ -57,7 +57,9 @@ public class TreeAlgorithmExecutor {
 
     public static void runTreeBFS(String fileName, List<Double> bfsTimes, List<Long> memoryUsage) throws IOException {
         TreeNode root = readTreeFromFile(fileName);
+        BFSSequential.printOutput = false;
         long memUsed = monitorMemoryUsage(() -> BFSSequential.treeBFS(root));
+        BFSSequential.printOutput = true;
         long startTime = System.nanoTime();
         BFSSequential.treeBFS(root);
         long endTime = System.nanoTime();
@@ -71,7 +73,9 @@ public class TreeAlgorithmExecutor {
 
     public static void runTreeDFS(String fileName, List<Double> dfsTimes, List<Long> memoryUsage) throws IOException {
         TreeNode root = readTreeFromFile(fileName);
+        DFSSequential.printOutput = false;
         long memUsed = monitorMemoryUsage(() -> DFSSequential.treeDFS(root));
+        DFSSequential.printOutput = true;
         long startTime = System.nanoTime();
         DFSSequential.treeDFS(root);
         long endTime = System.nanoTime();
@@ -82,26 +86,49 @@ public class TreeAlgorithmExecutor {
         System.out.printf("\nTree DFS memory usage (bytes): %d\n", memUsed);
         System.out.printf("Tree DFS execution time: %.9f seconds.\n", durationInSeconds);
     }
-    public static TreeNode readTreeFromFile(String fileName) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        String line;
-        Map<Integer, TreeNode> nodes = new HashMap<>();
+//    public static TreeNode readTreeFromFile(String fileName) throws IOException {
+//        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+//        String line;
+//        Map<Integer, TreeNode> nodes = new HashMap<>();
+//
+//        while ((line = reader.readLine()) != null) {
+//            String[] parts = line.split(" ");
+//            int nodeId = Integer.parseInt(parts[0]);
+//            TreeNode node = nodes.computeIfAbsent(nodeId, TreeNode::new);
+//
+//            for (int i = 1; i < parts.length; i++) {
+//                int childId = Integer.parseInt(parts[i]);
+//                TreeNode child = nodes.computeIfAbsent(childId, TreeNode::new);
+//                node.addChild(child);
+//            }
+//        }
+//
+//        // Presupunând că primul nod este rădăcina arborelui
+//        return nodes.get(0); // sau orice altă logică specifică pentru a determina rădăcina
+//    }
+public static TreeNode readTreeFromFile(String fileName) throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    String line;
+    Map<Integer, TreeNode> nodes = new HashMap<>();
 
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(" ");
-            int nodeId = Integer.parseInt(parts[0]);
-            TreeNode node = nodes.computeIfAbsent(nodeId, TreeNode::new);
+    reader.readLine(); // Citeste si ignora prima linie cu numarul de noduri si muchii
+    while ((line = reader.readLine()) != null) {
+        String[] parts = line.split(" ");
+        int parentId = Integer.parseInt(parts[0]);
+        TreeNode parentNode = nodes.computeIfAbsent(parentId, TreeNode::new);
 
-            for (int i = 1; i < parts.length; i++) {
-                int childId = Integer.parseInt(parts[i]);
-                TreeNode child = nodes.computeIfAbsent(childId, TreeNode::new);
-                node.addChild(child);
-            }
+        for (int i = 1; i < parts.length; i++) {
+            int childId = Integer.parseInt(parts[i]);
+            TreeNode childNode = nodes.computeIfAbsent(childId, TreeNode::new);
+            parentNode.addChild(childNode);
         }
-
-        // Presupunând că primul nod este rădăcina arborelui
-        return nodes.get(0); // sau orice altă logică specifică pentru a determina rădăcina
     }
+    reader.close();
+
+    // Returnează nodul care nu are părinte presupunând că fiecare nod exceptând rădăcina are un părinte
+    return nodes.values().stream().filter(n -> n.getParent() == null).findFirst().orElse(null);
+}
+
 
     public static void runTreeMethods(String fileName, Scanner scanner, int nodeCount) {
         List<Double> bfsTreeTimes = new ArrayList<>();

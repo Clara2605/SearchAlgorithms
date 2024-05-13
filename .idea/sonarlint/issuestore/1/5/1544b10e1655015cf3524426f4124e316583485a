@@ -1,9 +1,18 @@
 
 €
-java:S1319"cThe type of "adj" should be an interface such as "List" rather than the implementation "ArrayList".(ÚÇåá8í§ê1
+java:S1319"cThe type of "adj" should be an interface such as "List" rather than the implementation "ArrayList".(ÚÇåá8í§ê1
+t
+java:S1104"WMake printOutput a static final constant or non-public and provide accessors if needed.(Ü“¼¡8Ãƒé÷1
+N
+java:S1444"1Make this "public static printOutput" field final(Ü“¼¡8Ãƒé÷1
 r
-java:S1149"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(û›şöıÿÿÿÿ8¨í§ê1
+java:S1149"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(û›şöıÿÿÿÿ8¨í§ê1
 m
-java:S1149/"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(ŠÈİà8È’§ì1
-G	java:S106"+Replace this use of System.out by a logger.(Áô¬8ØĞ˜ñë1
-L	java:S1064"+Replace this use of System.out by a logger.(ÄÔ„òşÿÿÿÿ8Ì’§ì1
+java:S11491"PReplace the synchronized class "Stack" by an unsynchronized one such as "Deque".(ŠÈİà8Çä²÷1
+L	java:S106"+Replace this use of System.out by a logger.(€¥ØÌıÿÿÿÿ8ºÅã÷1
+G	java:S106 "+Replace this use of System.out by a logger.(ô³ûÙ8»Åã÷1
+L	java:S106!"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8»Åã÷1
+L	java:S1067"+Replace this use of System.out by a logger.(Çï•Šıÿÿÿÿ8»Åã÷1
+L	java:S106:"+Replace this use of System.out by a logger.(¥ç„¸üÿÿÿÿ8¶Ù ÷1
+L	java:S106<"+Replace this use of System.out by a logger.(´ê™‡úÿÿÿÿ8ù¤Ê”÷1
+L	java:S106="+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ù¤Ê”÷1

@@ -1,6 +1,15 @@
 
 …
-java:S1319"cThe type of "adj" should be an interface such as "List" rather than the implementation "ArrayList".(®‚Ø”øÿÿÿÿ8ŒÅ‘ûë1
-r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É…ßùÿÿÿÿ8ŒÅ‘ûë1
-G	java:S106"+Replace this use of System.out by a logger.(Áô¬8™Å‘ûë1
-L	java:S1060"+Replace this use of System.out by a logger.(æ¡Îºÿÿÿÿÿ8¦Òú¦ì1
+java:S1319"cThe type of "adj" should be an interface such as "List" rather than the implementation "ArrayList".(®‚Ø”øÿÿÿÿ8œ¤Ó”÷1
+r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É…ßùÿÿÿÿ8¤Ó”÷1
+t
+java:S1104"WMake printOutput a static final constant or non-public and provide accessors if needed.(Î¸½8¤Ó”÷1
+N
+java:S1444"1Make this "public static printOutput" field final(Î¸½8¤Ó”÷1
+L	java:S106 "+Replace this use of System.out by a logger.(€¥ØÌıÿÿÿÿ8³¤Ó”÷1
+G	java:S106""+Replace this use of System.out by a logger.(‰íÖ¨8³¤Ó”÷1
+L	java:S106$"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8³¤Ó”÷1
+L	java:S106<"+Replace this use of System.out by a logger.(Çï•Šıÿÿÿÿ8´¤Ó”÷1
+L	java:S106?"+Replace this use of System.out by a logger.(¥ç„¸üÿÿÿÿ8µ¤Ó”÷1
+L	java:S106A"+Replace this use of System.out by a logger.(´ê™‡úÿÿÿÿ8µ¤Ó”÷1
+L	java:S106B"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8µ¤Ó”÷1
