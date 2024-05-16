@@ -29,7 +29,7 @@ public class GraphAlgorithmExecutor {
                 long currentMem = getMemoryUsage();
                 peakMem.set(Math.max(peakMem.get(), currentMem));
                 try {
-                    Thread.sleep(10); // Sleep for a short time to prevent high CPU usage
+                    Thread.sleep(100); // Sleep for a short time to prevent high CPU usage
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }

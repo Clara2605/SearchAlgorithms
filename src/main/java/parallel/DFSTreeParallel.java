@@ -2,8 +2,7 @@ package parallel;
 
 import graph.MyLogger;
 import tree.TreeNode;
-
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +10,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.logging.Level;
 
 public class DFSTreeParallel implements Callable<Set<TreeNode>> {
-
     private final TreeNode root;
     private final ConcurrentLinkedDeque<TreeNode> stack = new ConcurrentLinkedDeque<>();
     private final ConcurrentHashMap<TreeNode, Boolean> visited = new ConcurrentHashMap<>();
@@ -27,20 +25,16 @@ public class DFSTreeParallel implements Callable<Set<TreeNode>> {
         try {
             while (!stack.isEmpty()) {
                 TreeNode currentNode = stack.pop();
-                // Process the current node here, for example, you might want to log it or keep it in a result list
-                System.out.print(currentNode.getValue() + " ");
-
-                // Reverse the children before pushing to stack to maintain the correct DFS order
-                ArrayList<TreeNode> children = new ArrayList<>(currentNode.getChildren());
-                for (int i = children.size() - 1; i >= 0; i--) {
-                    TreeNode child = children.get(i);
+                Collections.reverse(currentNode.getChildren()); // Reverse to maintain DFS order
+                for (TreeNode child : currentNode.getChildren()) {
                     if (visited.putIfAbsent(child, true) == null) {
                         stack.push(child);
                     }
                 }
+                //System.out.println(); // Finish the line after all children are printed
             }
         } catch (Exception e) {
-            MyLogger.log(Level.SEVERE, "An error occurred during treeDFS: " + e.getMessage());
+            MyLogger.log(Level.SEVERE, "An error occurred during tree DFS: " + e.getMessage());
             // Optionally rethrow or handle the exception
         }
         return visited.keySet();

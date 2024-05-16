@@ -90,7 +90,7 @@ public class Main {
     private static void displayChoices() {
         System.out.println("\nSelect the execution method:");
         System.out.println("1. Sequential");
-        System.out.println("2. Parallel (available only for Graph)");
+        System.out.println("2. Parallel");
         System.out.println("3. Exit");
         System.out.print("Your choice (1/2/3): ");
     }
@@ -102,8 +102,12 @@ public class Main {
                     // Assuming that `runTreeMethods` is a method designed to run tree-specific algorithms
                     TreeAlgorithmExecutor.runTreeMethods(fileName, scanner,nodeCount);
                     break;
-                case 2:
-                    System.out.println("Parallel execution is not implemented for trees.");
+                case 2: // Now handle parallel execution for trees
+                    try {
+                        TreeAlgorithmExecutor.runParallelMethods(fileName, nodeCount);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 3: // Exit option
                     System.out.println("Exiting the program.");

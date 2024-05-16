@@ -7,8 +7,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import graph.MyLogger;
 
 public class BFSTreeParallel implements Callable<Set<TreeNode>> {
     private final TreeNode root;
@@ -27,21 +25,15 @@ public class BFSTreeParallel implements Callable<Set<TreeNode>> {
             while (!queue.isEmpty()) {
                 TreeNode currentNode = queue.poll();
                 if (currentNode == null) continue; // Safety check
-
-                try {
-                    // Since TreeNode.children is a list, it is safe to iterate over it directly.
-                    for (TreeNode child : currentNode.getChildren()) {
-                        if (visited.putIfAbsent(child, true) == null) {
-                            queue.add(child);
-                        }
+                for (TreeNode child : currentNode.getChildren()) {
+                    if (visited.putIfAbsent(child, true) == null) {
+                        queue.add(child);
                     }
-                } catch (Exception e) {
-                    MyLogger.log(Level.SEVERE, "Failed to process children for node with value " + currentNode.getValue() + ": " + e.getMessage());
-                    // Continue to the next node, or handle the error as necessary
                 }
+                //System.out.println(); // Finish the line after all children are printed
             }
         } catch (Exception e) {
-            MyLogger.log(Level.SEVERE, "An error occurred during treeBFS: " + e.getMessage());
+            MyLogger.log(Level.SEVERE, "An error occurred during tree BFS: " + e.getMessage());
             // Handle or rethrow the exception as needed
         }
         return visited.keySet(); // Return the set of visited nodes
