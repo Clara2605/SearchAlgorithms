@@ -23,52 +23,26 @@ public class TreeAlgorithmExecutor {
     }
 
     private static long monitorMemoryUsage(Runnable task) {
-        forceGarbageCollection(); // Ensure a clean state before measurement
-        long before = getMemoryUsage();
-        AtomicLong peakMemory = new AtomicLong(before);
-
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        Runnable memoryTask = () -> {
-            long currentMemory = getMemoryUsage();
-            peakMemory.set(Math.max(peakMemory.get(), currentMemory));
-        };
-
-        ScheduledFuture<?> memoryMonitor = scheduler.scheduleAtFixedRate(memoryTask, 0, 10, TimeUnit.MILLISECONDS);
-
-        try {
-            task.run();
-        } finally {
-            memoryMonitor.cancel(true);
-            scheduler.shutdown();
-            try {
-                scheduler.awaitTermination(1, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-
-        forceGarbageCollection();
-        long after = getMemoryUsage();
-        long memoryUsed = peakMemory.get() - before;
+        long before = getMemoryUsage(); // Capture before running the task
+        task.run(); // Execute the task
+        forceGarbageCollection(); // Force garbage collection after task completion
+        long after = getMemoryUsage(); // Capture after GC
+        long memoryUsed = before - after; // Calculate used memory as before - after
         LOGGER.info("Before memory: " + before);
         LOGGER.info("After memory: " + after);
-        LOGGER.info("Peak memory: " + peakMemory.get());
-        LOGGER.info("Memory used: " + memoryUsed);
-        return Math.max(memoryUsed, 0); // Return positive memory usage, or zero if negative
+        return Math.abs(memoryUsed); // Return the absolute value of memory change
     }
 
     private static void forceGarbageCollection() {
+        System.gc();
+        System.runFinalization();
         try {
-            System.gc();
-            System.runFinalization();
-            Thread.sleep(200);
+            Thread.sleep(200); // Ensure there is time for GC to process
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.out.println("Thread interrupted during garbage collection.");
         }
     }
-
-
     public static void runTreeBFS(String fileName, List<Double> bfsTimes, List<Long> memoryUsage) throws IOException {
         TreeNode root = readTreeFromFile(fileName);
         BFSSequential.printOutput = false;
