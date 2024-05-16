@@ -154,9 +154,8 @@ public class TreeAlgorithmExecutor {
         dfsMemoryUsage.add(dfsMemUsage);
         dfsParallelTimes.add(dfsDurationInSeconds);
 
-        // Output and cleanup
-        printResults("BFS", bfsResult.get(), bfsDurationInSeconds, bfsMemUsage);
-        printResults("DFS", dfsResult.get(), dfsDurationInSeconds, dfsMemUsage);
+        printResults("BFS", bfsResult.get(), bfsDurationInSeconds, bfsMemUsage, root);
+        printResults("DFS", dfsResult.get(), dfsDurationInSeconds, dfsMemUsage, root);
 
         executorBFS.shutdown();
         executorBFS.awaitTermination(1, TimeUnit.HOURS);
@@ -203,10 +202,17 @@ public class TreeAlgorithmExecutor {
         return peakMem.get() - startMem;
     }
 
-    private static void printResults(String algorithmName, Set<TreeNode> result, double durationInSeconds, double memoryUsage) {
+    private static void printResults(String algorithmName, Set<TreeNode> result, double durationInSeconds, double memoryUsage, TreeNode root) {
         System.out.println(algorithmName + " Tree Structure:");
-        result.forEach(node -> System.out.println("Visited node: " + node.getValue()));
-        System.out.printf(algorithmName + " Execution time: %.9f seconds.\n", durationInSeconds);
-        System.out.printf(algorithmName + " Memory usage (bytes): %.0f\n", memoryUsage);
+        printTreeStructure(root, "");
+        System.out.printf("%s Execution time: %.9f seconds.\n", algorithmName, durationInSeconds);
+        System.out.printf("%s Memory usage (bytes): %.0f\n", algorithmName, memoryUsage);
+    }
+
+    private static void printTreeStructure(TreeNode node, String indent) {
+        if (node != null) {
+            System.out.println(indent + "Node " + node.getValue());
+            node.getChildren().forEach(child -> printTreeStructure(child, indent + "  "));
+        }
     }
 }
