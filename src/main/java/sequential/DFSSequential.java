@@ -62,9 +62,6 @@ public class DFSSequential {
                 }
                 children.forEach(stack::push);
             }
-//            for (TreeNode child : currentNode.getChildren()) {
-//                stack.push(child);
-//            }
         }
     }
 }

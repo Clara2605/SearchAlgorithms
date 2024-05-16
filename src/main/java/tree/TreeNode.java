@@ -3,7 +3,7 @@ package tree;
 import java.util.ArrayList;
 
 public class TreeNode {
-    private int value; // Variabila este acum privată
+    private int value;
     private ArrayList<TreeNode> children;
     private TreeNode parent;
 
@@ -15,7 +15,7 @@ public class TreeNode {
 
     public void addChild(TreeNode child) {
         this.children.add(child);
-        child.parent = this;  // Setează acest nod ca părinte al copilului
+        child.parent = this;
     }
     // Getter pentru variabila value
     public int getValue() {

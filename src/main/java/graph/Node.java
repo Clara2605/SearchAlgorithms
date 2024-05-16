@@ -2,7 +2,6 @@ package graph;
 
 public class Node {
     private int id; // Unique identifier for each node
-    // You can add other relevant properties here
 
     public Node(int id) {
         this.id = id;
@@ -12,7 +11,6 @@ public class Node {
         return id;
     }
 
-    // Ensure you override the equals() and hashCode() methods to use the nodes in hash-based data structures like HashSet or HashMap.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

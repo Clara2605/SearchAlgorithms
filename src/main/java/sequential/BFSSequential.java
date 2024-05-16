@@ -67,10 +67,6 @@ public class BFSSequential {
                 }
                 children.forEach(queue::add);
             }
-//            for (TreeNode child : currentNode.getChildren()) {
-//                queue.add(child);
-//            }
         }
     }
-
 }

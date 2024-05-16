@@ -6,13 +6,13 @@
 //import java.util.concurrent.ConcurrentLinkedQueue;
 //import java.util.concurrent.ConcurrentHashMap;
 //
-//public class BFSParallel implements Runnable {
+//public class BFSGraphParallel implements Runnable {
 //    private final Graph graph;
 //    private final Node startNode;
 //    private final ConcurrentLinkedQueue<Node> queue = new ConcurrentLinkedQueue<>();
 //    private final ConcurrentHashMap<Node, Boolean> visited = new ConcurrentHashMap<>();
 //
-//    public BFSParallel(Graph graph, Node startNode) {
+//    public BFSGraphParallel(Graph graph, Node startNode) {
 //        this.graph = graph;
 //        this.startNode = startNode;
 //        this.queue.add(startNode);
@@ -44,13 +44,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
 
-public class BFSParallel implements Callable<Set<Node>> {
+public class BFSGraphParallel implements Callable<Set<Node>> {
     private final Graph graph;
     private final Node startNode;
     private final ConcurrentLinkedQueue<Node> queue = new ConcurrentLinkedQueue<>();
     private final ConcurrentHashMap<Node, Boolean> visited = new ConcurrentHashMap<>();
 
-    public BFSParallel(Graph graph, Node startNode) {
+    public BFSGraphParallel(Graph graph, Node startNode) {
         this.graph = graph;
         this.startNode = startNode;
         this.queue.add(startNode);
@@ -74,12 +74,10 @@ public class BFSParallel implements Callable<Set<Node>> {
                     }
                 } catch (Exception e) {
                     MyLogger.log(Level.SEVERE, "Failed to process neighbors for node " + currentNode.getId() + ": " + e.getMessage());
-                    // Depending on the failure's nature, you might choose to continue, break, or throw a custom exception
                 }
             }
         } catch (Exception e) {
             MyLogger.log(Level.SEVERE, "An error occurred during graphBFS: " + e.getMessage());
-            // Rethrow if you want the caller to handle it or handle/recover internally
         }
         return visited.keySet();
     }

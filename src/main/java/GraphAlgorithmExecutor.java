@@ -1,15 +1,14 @@
 import graph.Graph;
 import graph.GraphReader;
 import graph.Node;
-import parallel.BFSParallel;
-import parallel.DFSParallel;
+import parallel.BFSGraphParallel;
+import parallel.DFSGraphParallel;
 import sequential.BFSSequential;
 import sequential.DFSSequential;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
-import java.lang.management.MemoryUsage;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -125,7 +124,7 @@ public class GraphAlgorithmExecutor {
         List<Double> dfsMemoryUsage = new ArrayList<>();
 
         // Memory and execution time monitoring for BFS
-        double bfsMemUsage = monitorParallelMemoryUsage(() -> new BFSParallel(graph, startNode).call(), executor);
+        double bfsMemUsage = monitorParallelMemoryUsage(() -> new BFSGraphParallel(graph, startNode).call(), executor);
         long startBfsTime = System.nanoTime();
         Set<Node> bfsResult = runParallelBFS(executor, graph, startNode).get();
         long endBfsTime = System.nanoTime();
@@ -134,7 +133,7 @@ public class GraphAlgorithmExecutor {
         bfsParallelTimes.add(bfsDurationInSeconds);
 
         // Memory and execution time monitoring for DFS
-        double dfsMemUsage = monitorParallelMemoryUsage(() -> new DFSParallel(graph, startNode).call(), executor);
+        double dfsMemUsage = monitorParallelMemoryUsage(() -> new DFSGraphParallel(graph, startNode).call(), executor);
         long startDfsTime = System.nanoTime();
         Set<Node> dfsResult = runParallelDFS(executor, graph, startNode).get();
         long endDfsTime = System.nanoTime();
@@ -189,11 +188,11 @@ public class GraphAlgorithmExecutor {
     }
 
     private static Future<Set<Node>> runParallelBFS(ExecutorService executor, Graph graph, Node startNode) {
-        return executor.submit(new BFSParallel(graph, startNode));
+        return executor.submit(new BFSGraphParallel(graph, startNode));
     }
 
     private static Future<Set<Node>> runParallelDFS(ExecutorService executor, Graph graph, Node startNode) {
-        return executor.submit(new DFSParallel(graph, startNode));
+        return executor.submit(new DFSGraphParallel(graph, startNode));
     }
     private static double monitorParallelMemoryUsage(Callable<Set<Node>> task, ExecutorService executor) throws Exception {
         forceGarbageCollection();  // Ensure a clean state before measurement

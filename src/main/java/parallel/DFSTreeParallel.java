@@ -35,7 +35,6 @@ public class DFSTreeParallel implements Callable<Set<TreeNode>> {
             }
         } catch (Exception e) {
             MyLogger.log(Level.SEVERE, "An error occurred during tree DFS: " + e.getMessage());
-            // Optionally rethrow or handle the exception
         }
         return visited.keySet();
     }

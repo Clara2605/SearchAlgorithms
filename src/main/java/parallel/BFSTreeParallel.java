@@ -34,7 +34,6 @@ public class BFSTreeParallel implements Callable<Set<TreeNode>> {
             }
         } catch (Exception e) {
             MyLogger.log(Level.SEVERE, "An error occurred during tree BFS: " + e.getMessage());
-            // Handle or rethrow the exception as needed
         }
         return visited.keySet(); // Return the set of visited nodes
     }
