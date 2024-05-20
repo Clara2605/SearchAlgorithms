@@ -204,15 +204,31 @@ public class TreeAlgorithmExecutor {
 
     private static void printResults(String algorithmName, Set<TreeNode> result, double durationInSeconds, double memoryUsage, TreeNode root) {
         System.out.println(algorithmName + " Tree Structure:");
-        printTreeStructure(root, "");
+        printFlatTreeStructure(root);
         System.out.printf("%s Execution time: %.9f seconds.\n", algorithmName, durationInSeconds);
         System.out.printf("%s Memory usage (bytes): %.0f\n", algorithmName, memoryUsage);
     }
 
-    private static void printTreeStructure(TreeNode node, String indent) {
-        if (node != null) {
-            System.out.println(indent + "Node " + node.getValue());
-            node.getChildren().forEach(child -> printTreeStructure(child, indent + "  "));
+    private static void printFlatTreeStructure(TreeNode node) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(node);
+
+        while (!queue.isEmpty()) {
+            TreeNode currentNode = queue.poll();
+            if (currentNode != null) {
+                System.out.print("Node " + currentNode.getValue() + " connects to: ");
+                List<TreeNode> children = currentNode.getChildren();
+                if (children.isEmpty()) {
+                    System.out.println("no direct children");
+                } else {
+                    children.forEach(child -> {
+                        System.out.print(child.getValue() + " ");
+                        queue.add(child);
+                    });
+                    System.out.println();
+                }
+            }
         }
     }
+
 }

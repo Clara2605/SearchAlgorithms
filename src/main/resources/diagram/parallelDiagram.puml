@@ -1,6 +1,7 @@
 @startuml
 skinparam linetype ortho
 left to right direction
+'top to bottom direction
 
 class Graph {
     -adjacencyList: Map<Node, Set<Node>>
@@ -40,8 +41,43 @@ class DFSParallel {
     +call(): Set<Node>
 }
 
+class BFSTreeParallel {
+    -root: TreeNode
+    +BFSTreeParallel(TreeNode): void
+    +call(): Set<TreeNode>
+}
+
+class DFSTreeParallel {
+    -root: TreeNode
+    +DFSTreeParallel(TreeNode): void
+    +call(): Set<TreeNode>
+}
+
 class GraphAlgorithmExecutor {
     +runParallelMethods(String, int): void
+    +runParallelBFS(ExecutorService, Graph, Node): Future<Set<Node>>
+    +runParallelDFS(ExecutorService, Graph, Node): Future<Set<Node>>
+}
+
+class TreeAlgorithmExecutor {
+    +runParallelMethods(String, int): void
+    +monitorParallelMemoryUsage(Callable<Set<TreeNode>>): double
+}
+
+class ExcelDataRecorder {
+    +writeData(String, List<Double>, List<Double>, int, boolean, boolean): void
+    +writeHeader(Sheet, boolean): void
+    +writeDataInColumns(List<Double>, List<Double>, int, Row): void
+    +getNextEmptyRow(Sheet, int): int
+}
+
+class TreeNode {
+    -value: int
+    -children: ArrayList<TreeNode>
+    +TreeNode(int): void
+    +addChild(TreeNode): void
+    +getValue(): int
+    +getChildren(): ArrayList<TreeNode>
 }
 
 class Main {
@@ -54,8 +90,13 @@ BFSParallel --> Graph
 BFSParallel --> Node
 DFSParallel --> Graph
 DFSParallel --> Node
-BFSParallel ..> GraphAlgorithmExecutor : used by
-DFSParallel ..> GraphAlgorithmExecutor : used by
+BFSTreeParallel --> TreeNode
+DFSTreeParallel --> TreeNode
+GraphAlgorithmExecutor --> BFSParallel : uses
+GraphAlgorithmExecutor --> DFSParallel : uses
+TreeAlgorithmExecutor --> BFSTreeParallel : uses
+TreeAlgorithmExecutor --> DFSTreeParallel : uses
 Main ..> GraphAlgorithmExecutor : executes
+Main ..> TreeAlgorithmExecutor : executes
 
 @enduml

@@ -1,6 +1,29 @@
 @startuml
 skinparam linetype ortho
+'top to bottom direction
 left to right direction
+
+class Main {
+    +main(String[]): void
+}
+
+class GraphAlgorithmExecutor {
+    +runSequentialBFS(String, int, List<Double>, List<Double>): void
+    +runSequentialDFS(String, int, List<Double>, List<Double>): void
+    +runSequentialMethods(String, int, int): void
+}
+
+class TreeAlgorithmExecutor {
+    +runTreeBFS(String, List<Double>, List<Long>): void
+    +runTreeDFS(String, List<Double>, List<Long>): void
+    +runTreeMethods(String, Scanner, int): void
+    +readTreeFromFile(String): TreeNode
+    +convertToDoubleList(List<Long>): List<Double>
+}
+
+class GraphReader {
+    +readGraph(String): ArrayList<ArrayList<Integer>>
+}
 
 class BFSSequential {
     +graphBFS(ArrayList<ArrayList<Integer>>, int): void
@@ -21,34 +44,20 @@ class TreeNode {
     +getChildren(): ArrayList<TreeNode>
 }
 
-class GraphAlgorithmExecutor {
-    +runSequentialBFS(String, int, List<Double>, List<Double>): void
-    +runSequentialDFS(String, int, List<Double>, List<Double>): void
-    +runSequentialMethods(String, int, int): void
-}
-
-class TreeAlgorithmExecutor {
-    +runTreeBFS(String, List<Double>, List<Long>): void
-    +runTreeDFS(String, List<Double>, List<Long>): void
-    +runTreeMethods(String, Scanner, int): void
-    +readTreeFromFile(String): TreeNode
-}
-
 class ExcelDataRecorder {
+    +writeData(String, List<Double>, List<Double>, int, boolean, boolean): void
     +writeHeader(Sheet, boolean): void
     +writeDataInColumns(List<Double>, List<Double>, int, Row): void
     +getNextEmptyRow(Sheet, int): int
 }
 
-class Main {
-    +main(String[]): void
-}
-
+Main ..> GraphAlgorithmExecutor : executes
+Main ..> TreeAlgorithmExecutor : executes
+GraphAlgorithmExecutor ..> GraphReader : uses
+TreeAlgorithmExecutor ..> TreeNode : uses
 BFSSequential ..> TreeAlgorithmExecutor : used by
 DFSSequential ..> TreeAlgorithmExecutor : used by
 TreeNode ..> TreeAlgorithmExecutor : used by
-Main ..> GraphAlgorithmExecutor : executes
-Main ..> TreeAlgorithmExecutor : executes
 BFSSequential ..> GraphAlgorithmExecutor : used by
 DFSSequential ..> GraphAlgorithmExecutor : used by
 ExcelDataRecorder ..> GraphAlgorithmExecutor : logs data
