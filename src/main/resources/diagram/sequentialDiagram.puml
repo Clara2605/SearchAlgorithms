@@ -11,6 +11,9 @@ class GraphAlgorithmExecutor {
     +runSequentialBFS(String, int, List<Double>, List<Double>): void
     +runSequentialDFS(String, int, List<Double>, List<Double>): void
     +runSequentialMethods(String, int, int): void
+    -getMemoryUsage(): long
+    -monitorMemoryUsage(Runnable): double
+    -forceGarbageCollection(): void
 }
 
 class TreeAlgorithmExecutor {
@@ -19,6 +22,9 @@ class TreeAlgorithmExecutor {
     +runTreeMethods(String, Scanner, int): void
     +readTreeFromFile(String): TreeNode
     +convertToDoubleList(List<Long>): List<Double>
+    -getMemoryUsage(): long
+    -monitorMemoryUsage(Runnable): long
+    -forceGarbageCollection(): void
 }
 
 class GraphReader {

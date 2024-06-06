@@ -3,10 +3,6 @@
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 G
 src/main/java/Main.java,e\4\e44a8606ce010ad9b89aafdfcee2ab49afbf6d10
-W
-'src/main/java/parallel/BFSParallel.java,3\e\3e455cd0c1e382a6ac1af0ed1f6d7744c54749d2
-W
-'src/main/java/parallel/DFSParallel.java,4\5\45c94810179013864bc88aeb3c30f1d49388e24e
 [
 +src/main/java/sequential/BFSSequential.java,4\b\4b5a83c53703c47235905dbf233be791ad1cb8db
 [

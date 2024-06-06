@@ -23,21 +23,21 @@ class GraphReader {
     +readGraph(String): List<List<Integer>>
 }
 
-class BFSParallel {
+class BFSGraphParallel {
     -graph: Graph
     -startNode: Node
     -queue: ConcurrentLinkedQueue<Node>
     -visited: ConcurrentHashMap<Node, Boolean>
-    +BFSParallel(Graph, Node): void
+    +BFSGraphParallel(Graph, Node): void
     +call(): Set<Node>
 }
 
-class DFSParallel {
+class DFSGraphParallel {
     -graph: Graph
     -startNode: Node
     -stack: ConcurrentLinkedDeque<Node>
     -visited: ConcurrentHashMap<Node, Boolean>
-    +DFSParallel(Graph, Node): void
+    +DFSGraphParallel(Graph, Node): void
     +call(): Set<Node>
 }
 
@@ -57,11 +57,14 @@ class GraphAlgorithmExecutor {
     +runParallelMethods(String, int): void
     +runParallelBFS(ExecutorService, Graph, Node): Future<Set<Node>>
     +runParallelDFS(ExecutorService, Graph, Node): Future<Set<Node>>
+    -monitorParallelMemoryUsage(Callable<Set<Node>>, ExecutorService): double
 }
 
 class TreeAlgorithmExecutor {
     +runParallelMethods(String, int): void
-    +monitorParallelMemoryUsage(Callable<Set<TreeNode>>): double
+    -monitorParallelMemoryUsage(Callable<Set<TreeNode>>): double
+    +runParallelBFSTree(ExecutorService, TreeNode): Future<Set<TreeNode>>
+    +runParallelDFSTree(ExecutorService, TreeNode): Future<Set<TreeNode>>
 }
 
 class ExcelDataRecorder {
@@ -86,16 +89,18 @@ class Main {
 
 Graph --> Node : contains
 GraphReader ..> Graph : reads and converts to
-BFSParallel --> Graph
-BFSParallel --> Node
-DFSParallel --> Graph
-DFSParallel --> Node
+BFSGraphParallel --> Graph
+BFSGraphParallel --> Node
+DFSGraphParallel --> Graph
+DFSGraphParallel --> Node
 BFSTreeParallel --> TreeNode
 DFSTreeParallel --> TreeNode
-GraphAlgorithmExecutor --> BFSParallel : uses
-GraphAlgorithmExecutor --> DFSParallel : uses
+GraphAlgorithmExecutor --> BFSGraphParallel : uses
+GraphAlgorithmExecutor --> DFSGraphParallel : uses
+GraphAlgorithmExecutor ..> ExcelDataRecorder : logs data
 TreeAlgorithmExecutor --> BFSTreeParallel : uses
 TreeAlgorithmExecutor --> DFSTreeParallel : uses
+TreeAlgorithmExecutor ..> ExcelDataRecorder : logs data
 Main ..> GraphAlgorithmExecutor : executes
 Main ..> TreeAlgorithmExecutor : executes
 
