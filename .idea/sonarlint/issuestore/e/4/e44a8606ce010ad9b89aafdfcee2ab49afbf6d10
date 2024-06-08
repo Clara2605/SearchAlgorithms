@@ -1,32 +1,33 @@
 
-{	java:S115	"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(•§ƒËıÿÿÿÿ8æ‹ÖÌì1
+v	java:S115	"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(šÄÕÖ8Öß×øõ1
 {	java:S115
-"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(íÙ¡Éÿÿÿÿÿ8ç‹ÖÌì1
-{	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÛÅ»ıÿÿÿÿ8ç‹ÖÌì1
-v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÆÍÒ®8ç‹ÖÌì1
-G	java:S106"+Replace this use of System.out by a logger.(ºƒÑĞ8î‹ÖÌì1
-G	java:S106"+Replace this use of System.out by a logger.(†èØ8î‹ÖÌì1
-L	java:S106+"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8ï‹ÖÌì1
-L	java:S1064"+Replace this use of System.out by a logger.(Ñ¾²˜şÿÿÿÿ8ï‹ÖÌì1
-L	java:S1065"+Replace this use of System.out by a logger.(çÃ¾·ıÿÿÿÿ8ï‹ÖÌì1
-G	java:S1066"+Replace this use of System.out by a logger.(£ŠßÌ8ğ‹ÖÌì1
-G	java:S1067"+Replace this use of System.out by a logger.(ù÷Ç÷8ğ‹ÖÌì1
-L	java:S1068"+Replace this use of System.out by a logger.(¨ÿæşÿÿÿÿ8ğ‹ÖÌì1
-L	java:S106?"+Replace this use of System.out by a logger.(…Ûüñûÿÿÿÿ8ğ‹ÖÌì1
-L	java:S106@"+Replace this use of System.out by a logger.(°¤¯¸ÿÿÿÿÿ8ğ‹ÖÌì1
-G	java:S106A"+Replace this use of System.out by a logger.(ùƒç½8ğ‹ÖÌì1
-G	java:S106B"+Replace this use of System.out by a logger.(ù÷Ç÷8ğ‹ÖÌì1
-L	java:S106C"+Replace this use of System.out by a logger.(¨ÿæşÿÿÿÿ8ñ‹ÖÌì1
-G	java:S106N"+Replace this use of System.out by a logger.(íá«å8ñ‹ÖÌì1
-L	java:S106Q"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8ñ‹ÖÌì1
-L	java:S106T"+Replace this use of System.out by a logger.(ò†‚äıÿÿÿÿ8ò‹ÖÌì1
-L	java:S106e"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8ò‹ÖÌì1
-L	java:S106h"+Replace this use of System.out by a logger.(ò†‚äıÿÿÿÿ8ó‹ÖÌì1
+"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(•§ƒËıÿÿÿÿ8åò×øõ1
+{	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(íÙ¡Éÿÿÿÿÿ8ç‹ÖÌì1
+{	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Â»§ùÿÿÿÿ8ä‚Ùøõ1
+{	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÛÅ»ıÿÿÿÿ8ç‹ÖÌì1
+v	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÆÍÒ®8ç‹ÖÌì1
+G	java:S106"+Replace this use of System.out by a logger.(¬äê8ï‹ÖÌì1
+G	java:S106"+Replace this use of System.out by a logger.(¤Ò€Å8ï‹ÖÌì1
+L	java:S106-"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8ï‹ÖÌì1
+L	java:S106P"+Replace this use of System.out by a logger.(Ñ¾²˜şÿÿÿÿ8äğö1
+L	java:S106Q"+Replace this use of System.out by a logger.(çÃ¾·ıÿÿÿÿ8äğö1
+G	java:S106R"+Replace this use of System.out by a logger.(£ŠßÌ8äğö1
+G	java:S106S"+Replace this use of System.out by a logger.(ù÷Ç÷8Ÿäğö1
+L	java:S106T"+Replace this use of System.out by a logger.(¨ÿæşÿÿÿÿ8Ÿäğö1
+L	java:S106["+Replace this use of System.out by a logger.(…Ûüñûÿÿÿÿ8Ÿäğö1
+L	java:S106\"+Replace this use of System.out by a logger.(°¤¯¸ÿÿÿÿÿ8Ÿäğö1
+F	java:S106]"+Replace this use of System.out by a logger.(›ŠÕX8 äğö1
+G	java:S106^"+Replace this use of System.out by a logger.(ù÷Ç÷8 äğö1
+L	java:S106_"+Replace this use of System.out by a logger.(¨ÿæşÿÿÿÿ8 äğö1
+L	java:S106q"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8¡äğö1
+L	java:S106t"+Replace this use of System.out by a logger.(ò†‚äıÿÿÿÿ8¢äğö1
+M	java:S106…"+Replace this use of System.out by a logger.(Á­Ãşÿÿÿÿ8¢äğö1
+M	java:S106ˆ"+Replace this use of System.out by a logger.(ò†‚äıÿÿÿÿ8£äğö1
 R
-java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8ŸŠ£Îì1
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8‹ŠÈ–÷1
 M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ŸŠ£Îì1
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8‹ŠÈ–÷1
 M
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ŸŠ£Îì1
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ŒŠÈ–÷1
 G
 java:S1068"*Remove this unused "LOGGER" private field.(âÑº8œ—™Îì1

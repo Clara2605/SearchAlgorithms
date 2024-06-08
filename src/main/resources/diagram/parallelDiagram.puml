@@ -1,6 +1,7 @@
 @startuml
 skinparam linetype ortho
 left to right direction
+'top to bottom direction
 
 class Graph {
     -adjacencyList: Map<Node, Set<Node>>
@@ -22,26 +23,64 @@ class GraphReader {
     +readGraph(String): List<List<Integer>>
 }
 
-class BFSParallel {
+class BFSGraphParallel {
     -graph: Graph
     -startNode: Node
     -queue: ConcurrentLinkedQueue<Node>
     -visited: ConcurrentHashMap<Node, Boolean>
-    +BFSParallel(Graph, Node): void
+    +BFSGraphParallel(Graph, Node): void
     +call(): Set<Node>
 }
 
-class DFSParallel {
+class DFSGraphParallel {
     -graph: Graph
     -startNode: Node
     -stack: ConcurrentLinkedDeque<Node>
     -visited: ConcurrentHashMap<Node, Boolean>
-    +DFSParallel(Graph, Node): void
+    +DFSGraphParallel(Graph, Node): void
     +call(): Set<Node>
+}
+
+class BFSTreeParallel {
+    -root: TreeNode
+    +BFSTreeParallel(TreeNode): void
+    +call(): Set<TreeNode>
+}
+
+class DFSTreeParallel {
+    -root: TreeNode
+    +DFSTreeParallel(TreeNode): void
+    +call(): Set<TreeNode>
 }
 
 class GraphAlgorithmExecutor {
     +runParallelMethods(String, int): void
+    +runParallelBFS(ExecutorService, Graph, Node): Future<Set<Node>>
+    +runParallelDFS(ExecutorService, Graph, Node): Future<Set<Node>>
+    -monitorParallelMemoryUsage(Callable<Set<Node>>, ExecutorService): double
+}
+
+class TreeAlgorithmExecutor {
+    +runParallelMethods(String, int): void
+    -monitorParallelMemoryUsage(Callable<Set<TreeNode>>): double
+    +runParallelBFSTree(ExecutorService, TreeNode): Future<Set<TreeNode>>
+    +runParallelDFSTree(ExecutorService, TreeNode): Future<Set<TreeNode>>
+}
+
+class ExcelDataRecorder {
+    +writeData(String, List<Double>, List<Double>, int, boolean, boolean): void
+    +writeHeader(Sheet, boolean): void
+    +writeDataInColumns(List<Double>, List<Double>, int, Row): void
+    +getNextEmptyRow(Sheet, int): int
+}
+
+class TreeNode {
+    -value: int
+    -children: ArrayList<TreeNode>
+    +TreeNode(int): void
+    +addChild(TreeNode): void
+    +getValue(): int
+    +getChildren(): ArrayList<TreeNode>
 }
 
 class Main {
@@ -50,12 +89,19 @@ class Main {
 
 Graph --> Node : contains
 GraphReader ..> Graph : reads and converts to
-BFSParallel --> Graph
-BFSParallel --> Node
-DFSParallel --> Graph
-DFSParallel --> Node
-BFSParallel ..> GraphAlgorithmExecutor : used by
-DFSParallel ..> GraphAlgorithmExecutor : used by
+BFSGraphParallel --> Graph
+BFSGraphParallel --> Node
+DFSGraphParallel --> Graph
+DFSGraphParallel --> Node
+BFSTreeParallel --> TreeNode
+DFSTreeParallel --> TreeNode
+GraphAlgorithmExecutor --> BFSGraphParallel : uses
+GraphAlgorithmExecutor --> DFSGraphParallel : uses
+GraphAlgorithmExecutor ..> ExcelDataRecorder : logs data
+TreeAlgorithmExecutor --> BFSTreeParallel : uses
+TreeAlgorithmExecutor --> DFSTreeParallel : uses
+TreeAlgorithmExecutor ..> ExcelDataRecorder : logs data
 Main ..> GraphAlgorithmExecutor : executes
+Main ..> TreeAlgorithmExecutor : executes
 
 @enduml

@@ -1,14 +1,8 @@
 
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-U
-%src/test/java/GraphGeneratorTest.java,e\1\e14cc4dbac55ff92c5efeb9cfbe5b3ce2ef77011
 G
 src/main/java/Main.java,e\4\e44a8606ce010ad9b89aafdfcee2ab49afbf6d10
-W
-'src/main/java/parallel/BFSParallel.java,3\e\3e455cd0c1e382a6ac1af0ed1f6d7744c54749d2
-W
-'src/main/java/parallel/DFSParallel.java,4\5\45c94810179013864bc88aeb3c30f1d49388e24e
 [
 +src/main/java/sequential/BFSSequential.java,4\b\4b5a83c53703c47235905dbf233be791ad1cb8db
 [
@@ -23,8 +17,6 @@ T
 $src/main/java/graph/GraphReader.java,7\0\70a0761d5177140312e8d847963457ce05851d4a
 Q
 !src/main/java/graph/MyLogger.java,c\d\cde2d93713eda3df6807d1cde5af2ee8960a1f40
-]
--src/main/java/ExcelExecutionTimeRecorder.java,2\e\2ebd82aa21fdeb616d3b211b773356da022169c9
 Y
 )src/main/java/GraphAlgorithmExecutor.java,2\6\2697a3c01a5c04fb2b53b8729801c212bbb3e27f
 W
@@ -47,3 +39,11 @@ T
 $src/main/java/ExcelDataRecorder.java,b\1\b14c5a4dcad9e5561cc51aa6194800dcbcd7d8f9
 [
 +src/test/java/graph/GraphGeneratorTest.java,c\a\ca20f65d803cb46fcc5af161b1be05c05b682a9f
+[
++src/main/java/parallel/BFSTreeParallel.java,e\5\e52aa9424134f286aa7342da0c2192b4162d47cc
+[
++src/main/java/parallel/DFSTreeParallel.java,8\9\893a9e372f89f1a2e26f50d2a67233c050383127
+\
+,src/main/java/parallel/BFSGraphParallel.java,d\4\d401c5c4dc1b5e56f41ef3d11c6ac1594144289d
+\
+,src/main/java/parallel/DFSGraphParallel.java,a\4\a438dd0ca188581d2c8fb4aed7c23532dd5ea47c
